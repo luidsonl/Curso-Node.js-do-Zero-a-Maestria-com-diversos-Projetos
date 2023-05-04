@@ -1,0 +1,4 @@
+mario,
+luigi,
+toad,
+bowser,
