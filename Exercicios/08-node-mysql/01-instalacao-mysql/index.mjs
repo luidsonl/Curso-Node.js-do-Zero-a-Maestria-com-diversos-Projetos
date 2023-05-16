@@ -25,5 +25,5 @@ conn.connect((err)=>{
     }else{
         console.log('Conexão feita com sucesso')
     }
-    app.listen(3000)
 })
+app.listen(3000)
