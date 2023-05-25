@@ -97,3 +97,10 @@ app.post('/users/update', async(req, res)=>{
 conn.sync().then(()=>{
     app.listen(3000)
 }).catch((err)=>{console.log(err)})
+
+/*
+conn.sync({force: true}).then(()=>{
+    app.listen(3000)
+}).catch((err)=>{console.log(err)})
+*/
+//Forçaria o drop das tabelas e criaria novamente. É útil se você, por exemplo, for adicionar novas colunas / modificar a estrutura das tabelas
