@@ -1,6 +1,7 @@
 import express from "express";
 import exphbs from 'express-handlebars'
 import conn from './db/conn.mjs'
+import Task from "./models/Task.mjs";
 
 const app = express()
 
@@ -16,4 +17,9 @@ app.use(express.json())
 
 app.use(express.static('public'))
 
-app.listen(3000)
+conn
+.sync()
+.then(()=>{
+    app.listen(3000)
+})
+.catch((err) => console.log(err))
