@@ -56,7 +56,7 @@ nav ul li{
     padding: 0.8em;
     border-radius: 5px;
 }
-form button{
+form .confirm-button{
     text-align: center;
     font-weight: bold;
     min-width: 75px;

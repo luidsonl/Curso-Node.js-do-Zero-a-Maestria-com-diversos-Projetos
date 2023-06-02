@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 import db from '../db/conn.mjs'
 
-const Task = db.define('Task',{
+const Task = db.define('task',{
     title:{
         type: DataTypes.STRING,
         required: true
