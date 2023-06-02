@@ -2,6 +2,7 @@ import express from "express";
 import exphbs from 'express-handlebars'
 import conn from './db/conn.mjs'
 import Task from "./models/Task.mjs";
+import taskRoutes from "./routes/taskRoutes.mjs";
 
 const app = express()
 
@@ -16,6 +17,8 @@ app.use(
 app.use(express.json())
 
 app.use(express.static('public'))
+
+app.use('/tasks', taskRoutes)
 
 conn
 .sync()
