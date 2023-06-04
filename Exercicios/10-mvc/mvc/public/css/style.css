@@ -66,3 +66,38 @@ form .confirm-button{
     color: #fff;
     background-color: #114;
 }
+
+/*Cards*/
+.container{
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 10px;
+}
+.container a{
+    font-weight: bold;
+    color: #000;
+}
+.container .item{
+    border: 1px solid #aaa;
+    border-radius: 5px;
+    padding: 20px;
+    flex: 1 1 29%;
+    max-width: 29%;
+    list-style: none;
+}
+.align-right{
+    text-align: right;
+}
+
+.actions{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-size: 1.2em;
+}
+
+.actions i:hover{
+    color: #11f;
+}
