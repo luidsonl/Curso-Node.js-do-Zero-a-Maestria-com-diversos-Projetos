@@ -3,12 +3,49 @@
 <div class="">
     <ul class="container">
     {{#each tasks}}
-        <li class="item">
-            <a href="/tasks" class="title"> {{this.title}}</a>
+        <li class="
+        item
+        {{#if this.done}}
+            done
+        {{else}}
+            not-done
+        {{/if}}
+        ">  
+            <div class="title">
+                {{this.title}}
+            </div>
+            
+            {{#if this.description}}
+            <div class="description">
+                {{this.description}}
+            </div>
+            {{/if}}
             <div class="actions">
-                <a href=""><i class="bi bi-check2"></i></a>
-                <a href=""><i class="bi bi-pencil-square"></i></a>
-                <a href=""><i class="bi bi-x-lg"></i></a>
+                <form action="/tasks/updatestatus" method="post">
+
+                    <input type="hidden" name="id" value="{{this.id}}">
+                    <input type="hidden" name="done" value="{{this.done}}">
+
+                    <button type="submit">
+                        {{#if this.done}}
+                            <i class="bi bi-x-lg"></i>
+                        {{else}}
+                            <i class="bi bi-check2"></i>
+                        {{/if}}
+                        
+                    </button>
+
+                </form>
+
+                <a href="/tasks/edit/{{this.id}}"><i class="bi bi-pencil-square"></i></a>
+
+                <form action="/tasks/remove" method="post">
+                    <input type="hidden" name="id" value="{{this.id}}">
+                    <button type="submit">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </form>
+
             </div>
         </li>
 

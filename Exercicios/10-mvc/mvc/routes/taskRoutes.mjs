@@ -3,10 +3,15 @@ import TaskController from "../controllers/TaskController.mjs";
 
 const router = express.Router()
 
-router.get('/add', TaskController.createTask)
+//rotas post
 router.post('/add', TaskController.createTaskSave)
-router.get('/', TaskController.showTasks)
+router.post('/remove', TaskController.removeTask)
+router.post('/edit', TaskController.applyUpdateTask)
+router.post('/updatestatus', TaskController.toggleTaskStatus)
 
-router.get('/add', )
+//rotas get
+router.get('/add', TaskController.createTask)
+router.get('/edit/:id', TaskController.updateTask)
+router.get('/', TaskController.showTasks)
 
 export default router

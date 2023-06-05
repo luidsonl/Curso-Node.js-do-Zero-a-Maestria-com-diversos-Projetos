@@ -30,7 +30,7 @@ h1{
 nav{
     display: flex;
     padding: 15px 40px;
-    background-color: #114;
+    background-color: #307030;
 }
 nav a{
     color: #fff;
@@ -64,7 +64,8 @@ form .confirm-button{
     border-radius: 5px;
     cursor: pointer;
     color: #fff;
-    background-color: #114;
+    background-color: #50c050;
+    border: 1px solid #307030;
 }
 
 /*Cards*/
@@ -76,7 +77,6 @@ form .confirm-button{
     gap: 10px;
 }
 .container a{
-    font-weight: bold;
     color: #000;
 }
 .container .item{
@@ -87,15 +87,38 @@ form .confirm-button{
     max-width: 29%;
     list-style: none;
 }
+.container .done{
+    background-color: #50c050;
+}
+.container .not-done{
+    background-color: #c05050;
+}
 .align-right{
     text-align: right;
 }
-
+.container .item .title{
+    font-size: 1.3em;
+    font-weight: bold;
+    border-bottom: 1px solid #fff;
+    padding-bottom: 1em;
+}
+.container .item .description{
+    padding: 1em 0;
+    border-bottom: 1px solid #fff;
+}
 .actions{
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
     font-size: 1.2em;
+}
+.actions button{
+    background: none;
+    border: none;
+    padding: 0;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
 }
 
 .actions i:hover{
