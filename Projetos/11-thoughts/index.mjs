@@ -5,7 +5,18 @@ import FileStoreModule from "session-file-store"
 import flash from "express-flash"
 import conn from "./db/conn.mjs"
 
+//importando rotas
+import thoughtsRoutes from "./routes/thoughtsRoutes.mjs"
+
+//controllers
+import ThoughtController from "./controllers/ThoughtController.mjs"
+
+//Middlewares
 import sessionMiddleware from "./middlewares/sessionConfig.mjs"
+
+// models
+import Thought from "./models/Thought.mjs"
+import User from "./models/User.mjs"
 
 
 
@@ -43,8 +54,14 @@ app.use((req, res, next)=>{
     next()
 })
 
+// Rotas
+app.use('/thoughts', thoughtsRoutes)
+app.get('/', ThoughtController.showThoughts)
 
-conn.sync().then(()=>{
+conn
+//.sync({force: true})
+.sync()
+.then(()=>{
     app.listen(3000)
 
 }).catch((err)=>{
