@@ -7,6 +7,7 @@ import conn from "./db/conn.mjs"
 
 //importando rotas
 import thoughtsRoutes from "./routes/thoughtsRoutes.mjs"
+import authRoutes from "./routes/authRoutes.mjs"
 
 //controllers
 import ThoughtController from "./controllers/ThoughtController.mjs"
@@ -55,8 +56,9 @@ app.use((req, res, next)=>{
 })
 
 // Rotas
-app.use('/thoughts', thoughtsRoutes)
-app.get('/', ThoughtController.showThoughts)
+app.use('/', thoughtsRoutes)
+app.use('/', authRoutes)
+
 
 conn
 //.sync({force: true})

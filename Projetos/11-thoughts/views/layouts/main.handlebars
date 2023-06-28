@@ -16,18 +16,18 @@
         </a>
         <ul>
             <li>
-                <a href="/">Pensamentos</a>
+                <a href="/" id="home-link">Pensamentos</a>
             </li>
             <!--Se não autenticado-->
             <li>
-                <a href="/login">Entrar</a>
+                <a href="/login" id="login-link">Entrar</a>
             </li>
             <li>
-                <a href="/register">Registrar</a>
+                <a href="/register" id="register-link">Registrar</a>
             </li>
         </ul>
     </nav>
-    <div class="container">
+    <div class="content">
         <!--Mensagens-->
         {{{body}}}
     </div>
@@ -40,3 +40,13 @@
     
 </body>
 </html>
+<script>// fará a lógica de detectar qual aba está ativa
+    const navbarLinks = {
+        '/':'home-link',
+        '/login': 'login-link',
+        '/register': 'register-link'
+    }
+    const activeLink = document.getElementById(navbarLinks[window.location.pathname])
+    activeLink.className += "active"
+
+</script>
