@@ -19,12 +19,21 @@
                 <a href="/" id="home-link">Pensamentos</a>
             </li>
             <!--Se não autenticado-->
+            {{#if session.userId}}
+                <li>
+                    <a href="/thoughts/dashboard">Dashboard</a>
+                </li>
+                <li>
+                    <a href="/logout">Sair</a>
+                </li>
+            {{else}}
             <li>
                 <a href="/login" id="login-link">Entrar</a>
             </li>
             <li>
                 <a href="/register" id="register-link">Registrar</a>
             </li>
+            {{/if}}
         </ul>
     </nav>
     <div class="content">
