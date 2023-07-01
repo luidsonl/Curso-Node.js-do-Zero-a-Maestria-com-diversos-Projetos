@@ -47,6 +47,17 @@ a{
 #navbar ul li a:hover{
     color: #dd3;
 }
+/*mensagens*/
+.message{
+    padding:1em;
+    color: #d70;
+    background-color: #222;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+    text-align: center;
+    margin: 0 auto 2em;
+    max-width: 60%;
+}
 /*conteudo*/
 .content{
     margin: 2em;
@@ -85,20 +96,22 @@ a{
     margin-bottom: 0.5em;
 }
 form input[type = 'submit']{
+    background-color: #000;
+    color: #d70;
     padding: 0.5em;
     width: 130px;
     height: 40px;
     display: flex;
     margin-left: auto;
-    background-color: #d70;
+    border-color: #d70;
     font-weight: bold;
-    border: none;
     cursor: pointer;
     font-size: 1em;
     transition: .3s;
 }
 form input[type = 'submit']:hover{
-    font-size: 1.2em;
+    background-color: #d70;
+    color: #000;
     transition: .3s;
 }
 

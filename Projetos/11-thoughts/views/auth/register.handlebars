@@ -1,23 +1,25 @@
 <div class="auth-container">
     <h2>Criar conta</h2>
-    <form action="/register">
+    <form action="/register"  method="POST">
         <div class="form-control">
             <label for="name">Nome</label>
-            <input type="text" id="name" name="name" placeholder="Informe seu nome" required>
+            <input type="text" id="name" name="name" placeholder="Informe seu nome" required value="{{name}}">
         </div>
         <div class="form-control">
             <label for="email">E-mail</label>
-            <input type="text" id="email" name="email" placeholder="Informe seu email" required>
+            <input type="text" id="email" name="email" placeholder="Informe seu email" required value="{{email}}">
         </div>
         <div class="form-control">
             <label for="password">Senha</label>
-            <input type="password" id="password" name="password" placeholder="Informe sua senha" required>
+            <input type="password" id="password" name="password" placeholder="Informe sua senha" required value="{{password}}">
         </div>
         <div class="form-control">
             <label for="password-confirm">Repita a senha</label>
-            <input type="password" id="password-confirm" name="password-confirm" placeholder="Informe sua senha" required>
+            <input type="password" id="password-confirm" name="passwordConfirm" placeholder="Informe sua senha" required value="{{passwordConfirm}}">
         </div>
         <input type="submit" value="Cadastrar" class="submit-button">
     </form>
     <p><a href="/login">Já tenho conta</a></p>
+</div>
+<div>
 </div>

@@ -28,7 +28,16 @@
         </ul>
     </nav>
     <div class="content">
-        <!--Mensagens-->
+        {{#if messages.message}}
+        <div class="message">
+            {{#each messages.message}}
+            <div>
+                {{this}}
+            </div>
+                
+            {{/each}}
+        </div>
+        {{/if}}
         {{{body}}}
     </div>
 
