@@ -6,6 +6,49 @@ class AuthController{
     static login(req, res){
         res.render('auth/login')
     }
+    static async loginPost(req, res){
+        const {email, password} = req.body
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        let error = false
+
+        if(!emailRegex.test(email)){
+            req.flash('message', 'Formato inválido de e-mail')
+            error = true
+        }
+
+        //Testa se o usuário está cadastrado
+        const user = await User.findOne({where: {email: email}})
+
+        if(!user){
+            req.flash('message', 'Usuário não cadastrado')
+            error = true
+        }else{
+            // Checa se a senha confere
+            const passwordMatch = bcrypt.compareSync(password, user.password)
+            if(!passwordMatch){
+                req.flash('message', 'Senha incorreta')
+                error = true
+            }
+        }
+        
+        //Retorna erros
+        if(error){
+            res.render('auth/login', req.body)
+        return
+        }
+
+        //Inicializando a sessão
+        req.session.userId = user.id
+
+        req.flash('message', 'Login realizado com sucesso')
+
+        req.session.save(()=>{
+            res.redirect('/')
+        })
+
+    }
+
     static register(req, res){
         res.render('auth/register')
     }
@@ -60,6 +103,11 @@ class AuthController{
         }catch(err){
             console.log(err)
         }
+    }
+
+    static logout(req, res){
+        req.session.destroy()
+        res.redirect('/login')
     }
 }
 
