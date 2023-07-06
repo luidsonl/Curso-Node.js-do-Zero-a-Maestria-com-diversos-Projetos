@@ -40,11 +40,13 @@ class AuthController{
 
         //Inicializando a sessão
         req.session.userId = user.id
+        req.session.userName = user.name
 
         req.flash('message', 'Login realizado com sucesso')
 
         req.session.save(()=>{
             res.redirect('/')
+            return
         })
 
     }
@@ -93,6 +95,7 @@ class AuthController{
 
             //Inicializando session
             req.session.userId = createdUser.id
+            req.session.userName = createdUser.name
 
             req.flash('message', 'Cadastro realizado com sucesso')
 

@@ -1,12 +1,11 @@
 /*Geral*/
-*{
+
+html, body{
+    height: 100%;
+    color:#fff;
     margin: 0;
     padding: 0;
     font-family: helvetica;
-}
-html, body{
-    height: 100%;
-    color:#fff
 }
 
 body{
@@ -14,9 +13,12 @@ body{
     display: flex;
     flex-direction: column;
 }
-a{
-    color:#fff
+h2, h1{
+    margin-bottom: 1em;
+    border-left: 4px solid #d70;
+    padding: 0.3em;
 }
+
 /*navbar*/
 #navbar{
     padding: 1.2em 1.4em;
@@ -26,6 +28,9 @@ a{
     align-items: center;
     background-color: #222;
     border-bottom: 1px solid #d70;
+}
+#navbar a{
+    color:#fff
 }
 #logo img{
     height: 40px;
@@ -63,6 +68,11 @@ a{
     margin: 2em;
     flex: 1 0 auto;
 }
+.content a{
+    color: #d70;
+    text-decoration: none;
+}
+
 /*login e registro*/
 .auth-container{
     max-width: 450px;
@@ -70,11 +80,7 @@ a{
     display: flex;
     flex-direction: column;
 }
-.auth-container h2{
-    margin-bottom: 1em;
-    border-left: 4px solid #d70;
-    padding: 0.3em;
-}
+
 .auth-container a{
     color: #d70;
     text-decoration: none;
@@ -99,7 +105,6 @@ form input[type = 'submit']{
     background-color: #000;
     color: #d70;
     padding: 0.5em;
-    width: 130px;
     height: 40px;
     display: flex;
     margin-left: auto;
@@ -115,6 +120,40 @@ form input[type = 'submit']:hover{
     transition: .3s;
 }
 
+/*dashboard*/
+.dashboard{
+    display: flex;
+    flex-direction: column;
+}
+.btn-container{
+    display: flex;
+    align-content: center;
+}
+.btn-container .btn{
+    background-color: #d70;
+    color: #000;
+    padding: 0.5em;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1em;
+    text-decoration: none;
+    align-items: center;
+    justify-content: center;
+}
+
+/*Criar / editar thought*/
+.thought-form-container{
+    display: flex;
+    justify-content: center;
+}
+
+
+.thought-form{
+    width: 30%;
+    min-width: 300px;
+
+}
+
 /* rodapé*/
 footer{
     background-color: #222;
@@ -125,3 +164,4 @@ footer{
     justify-content: center;
     border-top: 1px solid #d70;
 }
+
