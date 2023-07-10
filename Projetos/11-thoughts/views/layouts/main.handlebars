@@ -22,7 +22,7 @@
             <!--Se não autenticado-->
             {{#if session.userId}}
                 <li>
-                    <a href="/dashboard">Dashboard</a>
+                    <a href="/dashboard" id="dashboard">Dashboard</a>
                 </li>
                 <li>
                     <a href="/logout">Sair</a>
@@ -63,7 +63,8 @@
     const navbarLinks = {
         '/':'home-link',
         '/login': 'login-link',
-        '/register': 'register-link'
+        '/register': 'register-link',
+        '/dashboard': 'dashboard'
     }
     const activeLink = document.getElementById(navbarLinks[window.location.pathname])
     activeLink.className += "active"

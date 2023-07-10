@@ -6,9 +6,10 @@ const router = express.Router()
 
 
 //controller
-router.get('/add',checkAuth, ThoughtController.createThought)
-router.post('/add',checkAuth, ThoughtController.createThoughtPost)
-router.get('/dashboard',checkAuth, ThoughtController.dashboard)
+router.get('/add', checkAuth, ThoughtController.createThought)
+router.post('/add', checkAuth, ThoughtController.createThoughtPost)
+router.get('/dashboard', checkAuth, ThoughtController.dashboard)
+router.post('/remove', checkAuth, ThoughtController.removeThought)
 router.get('/', ThoughtController.showThoughts)
 
 export default router

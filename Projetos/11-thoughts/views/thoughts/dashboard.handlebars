@@ -2,9 +2,24 @@
     <div class="title-container">
         <h2>Dashboard</h2> 
     </div>
-    <div class="btn-container">
-        <a href="/add" class = 'btn'>Criar pensamento</a>
-    </div>
+        <a href="/add" class="btn">Criar pensamento</a>
 
     <h3>Seus pensamentos</h3>
+    <ul>
+        {{#each thoughts}}
+            <li>
+                <span class="label">
+                    {{this.title}}
+                </span>
+                <span class="actions">
+                    <a href="/" class="btn">Editar</a>
+
+                    <form action="/remove" method="POST">
+                        <input type="hidden" name="id" value="{{this.id}}">
+                        <input type="submit" value="Excluir">
+                    </form>
+                </span>
+            </li>
+        {{/each}}
+    </ul>
 </div>

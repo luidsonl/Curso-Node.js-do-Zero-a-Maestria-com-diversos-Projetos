@@ -13,10 +13,44 @@ body{
     display: flex;
     flex-direction: column;
 }
+/*Headers*/
 h2, h1{
     margin-bottom: 1em;
     border-left: 4px solid #d70;
     padding: 0.3em;
+}
+/*conteudo*/
+.content{
+    margin: 2em;
+    flex: 1 0 auto;
+}
+.content a{
+    color: #d70;
+    text-decoration: none;
+    padding: 0 0.5em;
+}
+
+/*Botões*/
+form input[type = 'submit'], .btn{
+    background-color: transparent;
+    color: #d70;
+    padding: 0.5em;
+    height: 40px;
+    display: flex;
+    margin-left: auto;
+    border: 1px solid #d70;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1em;
+    transition: .3s;
+    border-radius: 5px;
+    align-items: center;
+    justify-content: center;
+}
+form input[type = 'submit']:hover , .btn:hover{
+    background-color: #d70;
+    color: #000;
+    transition: .3s;
 }
 
 /*navbar*/
@@ -63,15 +97,7 @@ h2, h1{
     margin: 0 auto 2em;
     max-width: 60%;
 }
-/*conteudo*/
-.content{
-    margin: 2em;
-    flex: 1 0 auto;
-}
-.content a{
-    color: #d70;
-    text-decoration: none;
-}
+
 
 /*login e registro*/
 .auth-container{
@@ -91,7 +117,7 @@ h2, h1{
     margin-bottom: 1em;
 }
 .form-control input, .form-control textarea{
-    background-color: #000;
+    background-color: transparent;
     color: #aaa;
     padding: 0.3em;
     border-width: 0 1px 1px 0
@@ -101,44 +127,34 @@ h2, h1{
     font-weight: bold;
     margin-bottom: 0.5em;
 }
-form input[type = 'submit']{
-    background-color: #000;
-    color: #d70;
-    padding: 0.5em;
-    height: 40px;
-    display: flex;
-    margin-left: auto;
-    border-color: #d70;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 1em;
-    transition: .3s;
-}
-form input[type = 'submit']:hover{
-    background-color: #d70;
-    color: #000;
-    transition: .3s;
-}
+
 
 /*dashboard*/
 .dashboard{
     display: flex;
     flex-direction: column;
 }
-.btn-container{
+
+.title-container {
     display: flex;
-    align-content: center;
+    justify-content: space-between;
+    margin-bottom: 1em;
 }
-.btn-container .btn{
-    background-color: #d70;
-    color: #000;
-    padding: 0.5em;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 1em;
-    text-decoration: none;
+.dashboard ul{
+    list-style: none;
+}
+.dashboard li{
+    padding: 12px;
+    border-bottom: 1px solid #d70;
+    display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+}
+.dashboard .actions{
+    display: flex;
+}
+.dashboard .actions .btn{
+    margin-right: 1em;
 }
 
 /*Criar / editar thought*/
@@ -147,11 +163,9 @@ form input[type = 'submit']:hover{
     justify-content: center;
 }
 
-
 .thought-form{
     width: 30%;
     min-width: 300px;
-
 }
 
 /* rodapé*/
