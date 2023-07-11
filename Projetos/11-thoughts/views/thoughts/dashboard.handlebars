@@ -12,7 +12,7 @@
                     {{this.title}}
                 </span>
                 <span class="actions">
-                    <a href="/" class="btn">Editar</a>
+                    <a href="/edit/{{this.id}}" class="btn">Editar</a>
 
                     <form action="/remove" method="POST">
                         <input type="hidden" name="id" value="{{this.id}}">
@@ -22,4 +22,7 @@
             </li>
         {{/each}}
     </ul>
+    {{#if emptyThoughts}}
+        <p>Nenhum pensamento ainda,<a href="/add">publique seus penasmentos agora</a></p>
+    {{/if}}
 </div>
