@@ -1,19 +1,28 @@
 import { raw } from "mysql2";
 import Thought from "../models/Thought.mjs";
 import User from "../models/User.mjs";
+import { Op } from "sequelize";
 
 class ThoughtController{
 
     static async showThoughts(req, res){
 
-        const thoughtsData = await Thought.findAll(
-            {include: User}
-        )
+        const search = req.query.search ? req.query.search : "";
+
+        console.log(search)
+
+        const thoughtsData = await Thought.findAll({
+            include: User,
+            where: {
+                title: {[Op.like]: `%${search}%`}
+            }
+        })
 
         const thoughts = thoughtsData.map((result)=>result.get({plain: true}))
-
         
-        res.render('thoughts/home', { thoughts })
+        const thoughtsQty = thoughts.length ? thoughts.length : false
+        
+        res.render('thoughts/home', { thoughts, search, thoughtsQty })
     }
 
     static async dashboard(req, res){
