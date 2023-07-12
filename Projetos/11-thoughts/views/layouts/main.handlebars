@@ -14,20 +14,26 @@
         <a href="/" id="logo">
             <img src="/img/toughts_logo.png" alt="">
         </a>
-        
         <ul>
+            {{#if session.userName}}
+            <li>
+                {{session.userName}}
+            </li>
+            {{/if}}
             <li>
                 <a href="/" id="home-link">Pensamentos</a>
             </li>
-            <!--Se não autenticado-->
+            <!--Se autenticado-->
             {{#if session.userId}}
-                <li>
-                    <a href="/dashboard" id="dashboard">Dashboard</a>
-                </li>
-                <li>
-                    <a href="/logout">Sair</a>
-                </li>
+            <li>
+                <a href="/dashboard" id="dashboard">Dashboard</a>
+            </li>
+            <li>
+                <a href="/logout">Sair</a>
+            </li>
+            <!--Se não autenticado-->
             {{else}}
+
             <li>
                 <a href="/login" id="login-link">Entrar</a>
             </li>
@@ -37,6 +43,7 @@
             {{/if}}
         </ul>
     </nav>
+
     <div class="content">
         {{#if messages.message}}
         <div class="message">

@@ -1,7 +1,7 @@
 {{#if search}} 
     <h1>Você está buscando por: {{search}}</h1>
     {{#if thoughtsQty}} 
-        <p>Foram encontrados {{thoughtsQty}} thoughts para o termo: "{{search}}"</p>
+        <p>Foram encontrados {{thoughtsQty}} thoughts</p>
     {{else}} 
         <p>Não foram encontrados resultados para o termo: "{{search}}"</p>
     {{/if}}
@@ -21,12 +21,18 @@
         <form action="/" method="GET">
             <input type="hidden" name="search" value="{{this.search}}">
             <input type="hidden" name="order" value="new">
-            <button type="submit"><i class="bi bi-arrow-up"></i></button>
+            <button type="submit" {{#if oldFirst}}{{else}}class='active'{{/if}}>
+                <i class="bi bi-arrow-up" title="Novos primeiro">
+                </i>
+            </button>
         </form>
         <form action="/" method="GET">
             <input type="hidden" name="search" value="{{this.search}}">
             <input type="hidden" name="order" value="old">
-            <button type="submit"><i class="bi bi-arrow-down"></i></button>
+            <button type="submit" {{#if oldFirst}}class='active'{{/if}}>
+                <i class="bi bi-arrow-down" title="Antigos primeiro">
+                </i>
+                </button>
         </form>
         
     </div>

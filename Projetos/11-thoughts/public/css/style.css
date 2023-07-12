@@ -58,6 +58,7 @@ form input[type = 'submit']:hover , .btn:hover{
     padding: 1.2em 1.4em;
     margin-bottom: 1em;
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
     background-color: #222;
@@ -169,7 +170,7 @@ form input[type = 'submit']:hover , .btn:hover{
     cursor: pointer;
     margin-left: 1em;
 }
-.home-header .order-container button:hover{
+.home-header .order-container button:hover, .home-header .order-container .active{
     background-color: #d70;
     color: #000;
 }
@@ -245,3 +246,13 @@ footer{
     border-top: 1px solid #d70;
 }
 
+/*media querie da barra de navegação*/
+@media (max-width: 600px) {
+    #navbar, #navbar ul {
+        display: flex;
+        flex-direction: column;
+    }
+    #navbar ul li{
+        margin-bottom: 1em;
+    }
+  }

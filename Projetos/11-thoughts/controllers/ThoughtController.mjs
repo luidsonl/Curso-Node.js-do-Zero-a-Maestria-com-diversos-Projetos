@@ -9,20 +9,23 @@ class ThoughtController{
 
         const search = req.query.search ? req.query.search : "";
 
-        console.log(search)
+        const order = req.query.order == 'old' ? 'ASC' : 'DESC'
+
+        const oldFirst = req.query.order == 'old'
 
         const thoughtsData = await Thought.findAll({
             include: User,
             where: {
                 title: {[Op.like]: `%${search}%`}
-            }
+            },
+            order: [['createdAt', order]]
         })
 
         const thoughts = thoughtsData.map((result)=>result.get({plain: true}))
         
         const thoughtsQty = thoughts.length ? thoughts.length : false
         
-        res.render('thoughts/home', { thoughts, search, thoughtsQty })
+        res.render('thoughts/home', { thoughts, search, thoughtsQty, oldFirst})
     }
 
     static async dashboard(req, res){
