@@ -3,9 +3,9 @@
 <div class="products">
     {{#each products}}
         <h2>{{this.name}}</h2>
-        <p>{{this.description}}</p>
         <small>{{this.price}}</small>
         <img src="{{this.image}}" alt="{{this.image}}">
+        <a href="/products/{{this._id}}">detalhes</a>
     {{/each}}
 
 </div>
