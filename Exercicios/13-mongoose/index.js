@@ -1,6 +1,7 @@
 import express from 'express'
 import exphbs from 'express-handlebars'
 import conn from './db/conn.js'
+import productRoutes from './routes/productRoutes.js'
 
 conn()
 
@@ -19,4 +20,5 @@ app.use(
 
 
 app.use(express.static('public'))
+app.use('/products', productRoutes)
 app.listen(3000)
