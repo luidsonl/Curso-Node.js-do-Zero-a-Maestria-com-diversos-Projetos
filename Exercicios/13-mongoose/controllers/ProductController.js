@@ -7,15 +7,20 @@ class ProductController {
         res.render('products/all', {products})
     }
 
-    static RenderCreateProductPage(req, res){
+    static renderCreateProductPage(req, res){
         res.render('products/create')
     }
 
-    static createProduct(req, res){
-        const data = req.body
+    static async createProduct(req, res){
+        const name = req.body.name
+        const sku = req.body.sku
+        const price = req.body.price
+        const description = req.body.description
+        const featured_image = req.body.name.featured_image
+        const gallery = req.body.gallery
 
-        const product = new Product(data)
-        product.create()
+        const product = new Product({name, sku, price, description, featured_image, gallery})
+        await product.save()
         res.redirect('/products')
     }
 

@@ -9,7 +9,7 @@ const Product = mongoose.model(
         price: {type: Number, required: false},
         description: {type: String, required: false},
         featured_image: {type: String, required: false},
-        galery: {type: [String], required: false}
+        gallery: {type: [String], required: false}
         
     })
 )

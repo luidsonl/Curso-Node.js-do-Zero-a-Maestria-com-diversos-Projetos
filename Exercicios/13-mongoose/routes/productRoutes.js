@@ -3,7 +3,8 @@ import ProductController from '../controllers/ProductController.js'
 
 const productRoutes = express.Router()
 
-productRoutes.get('/create', ProductController.RenderCreateProductPage)
+productRoutes.get('/create', ProductController.renderCreateProductPage)
+productRoutes.post('/create', ProductController.createProduct)
 
 
 
