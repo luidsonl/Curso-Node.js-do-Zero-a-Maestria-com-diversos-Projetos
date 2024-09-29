@@ -19,6 +19,6 @@ app.use(
 )
 
 
-app.use(express.static('public'))
+app.use(express.static( 'public'))
 app.use('/products', productRoutes)
 app.listen(3000)

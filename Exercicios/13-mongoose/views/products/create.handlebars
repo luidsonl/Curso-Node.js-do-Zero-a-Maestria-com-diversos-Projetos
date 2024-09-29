@@ -2,20 +2,30 @@
 
 <form action="/products/create" method="post">
     <div class="form-control">
-        <label for="name">Nome do produto</label>
-        <input type="text" name="name">
+        <label for="name-input">Nome do produto</label>
+        <input id="name-input" type="text" name="name">
     </div>
     <div class="form-control">
-        <label for="price">Preço do produto</label>
-        <input type="text" name="price">
+        <label for="sku-input">SKU</label>
+        <input id="sku-input" type="text" name="sku">
     </div>
     <div class="form-control">
-        <label for="description">Descrição do produto</label>
-        <input type="text" name="description">
+        <label for="price-input">Preço do produto</label>
+        <input id="price-input" type="text" name="price" step="0.01" min="0">
     </div>
     <div class="form-control">
-        <label for="image">URL da imagem do produto</label>
-        <input type="text" name="image">
+        <label for="description-input">Descrição do produto</label>
+        <input id="description-input" type="text" name="description">
     </div>
-    <input type="submit" value="cadastrar"class="btn">
+    <div class="form-control">
+        <label for="featured-image-input">Imagem Destaque</label>
+        <input id="featured-image-input" type="text" name="image">
+    </div>
+    <div class="form-control">
+        <button type="button" id="add-galery-input">Inserir mídia na galeria</button>
+    </div>
+    <div class="form-galery">
+
+    </div>
+    <input type="submit" value="Cadastrar" class="btn">
 </form>
