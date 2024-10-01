@@ -1,21 +1,37 @@
-<h1>Editar</h1>
+<h1>Editar Produto</h1>
 
 <form action="/products/edit/{{product._id}}" method="post">
     <div class="form-control">
-        <label for="name">Nome do produto</label>
-        <input type="text" name="name" value="{{product.name}}">
+        <label for="name-input">Nome do produto</label>
+        <input id="name-input" type="text" name="name" value="{{product.name}}">
     </div>
     <div class="form-control">
-        <label for="price">Preço do produto</label>
-        <input type="text" name="price" value="{{product.price}}">
+        <label for="sku-input">SKU</label>
+        <input id="sku-input" type="text" name="sku" value="{{product.sku}}">
     </div>
     <div class="form-control">
-        <label for="description">Descrição do produto</label>
-        <input type="text" name="description" value="{{product.description}}">
+        <label for="price-input">Preço do produto</label>
+        <input id="price-input" type="text" name="price" step="0.01" min="0" value="{{product.price}}">
     </div>
     <div class="form-control">
-        <label for="image">URL da imagem do produto</label>
-        <input type="text" name="image" value="{{product.image}}">
+        <label for="description-input">Descrição do produto</label>
+        <input id="description-input" type="text" name="description" value="{{product.description}}">
     </div>
-    <input type="submit" value="Salvar"class="btn">
+    <div class="form-control">
+        <label for="featured-image-input">Imagem Destaque</label>
+        <input id="featured-image-input" type="text" name="featured-image" value="{{product.featured_image}}">
+    </div>
+
+
+    <div class="form-control">
+        <button type="button" id="add-gallery-input">Inserir mídia na galeria</button>
+    </div>
+    <div class="form-gallery">
+    {{#each product.gallery}}
+        <div class="form-control">
+            <input type="text" name="gallery[{{@index}}]" placeholder="Insira o link da mídia" value="{{this}}">
+        </div>
+    {{/each}}
+    </div>
+    <input type="submit" value="Editar" class="btn">
 </form>

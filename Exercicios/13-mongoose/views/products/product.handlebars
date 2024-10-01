@@ -3,8 +3,10 @@
         <p>{{product.description}}</p>
         <small>{{product.price}}</small>
         <img src="{{product.featured_image}}" alt="{{this.name}}">
-        <a href="/products/edit/{{product._id}}">editar</a>
-        <a href="/products/remove/{{product._id}}">remover</a>
+        <a href="/products/edit/{{product.sku}}">editar</a>
+        <form method="post" action="/products/remove/{{product._id}}">
+                <button>Remover</button>
+        </form>
         {{#each product.gallery}}
                 <img src="{{this}}" alt="{{this}}">
         {{/each}}

@@ -34,24 +34,31 @@ class ProductController {
     static async removeProduct(req, res){
         const id = req.params.id
 
-        await Product.removeProduct(id)
+        await Product.deleteOne({_id: id})
         res.redirect('/products')
     }
 
     static async renderEditProductPage(req, res){
-        const id = req.params.id
+        const sku = req.params.sku
 
-        const product = await Product.getProductById(id)
+        const product = await Product.findOne({sku: sku}).lean()
         res.render('products/edit', {product})
     }
 
     static async updateProduct(req, res){
-        const data = req.body
-        const id = req.params.id
+        const name = req.body.name
+        const sku = req.body.sku
+        const price = req.body.price
+        const description = req.body.description
+        const featured_image = req.body['featured-image']
+        const gallery = req.body.gallery
 
-        const product = new Product(data)
-        product.update(id)
-        res.redirect(`/products/${id}`)
+        const product = {name, sku, price, description, featured_image, gallery}
+
+        console.log(product)
+
+        await Product.updateOne({_id: req.params.id}, product)
+        res.redirect(`/products/${sku}`)
     }
 }
 
