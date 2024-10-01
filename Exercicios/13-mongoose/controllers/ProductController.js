@@ -3,7 +3,7 @@ import Product from "../models/product.js";
 class ProductController {
     static async renderAllProducts(req, res){
 
-        const products = await Product.getProducts()
+        const products = await Product.find().lean()
         res.render('products/all', {products})
     }
 
@@ -16,7 +16,7 @@ class ProductController {
         const sku = req.body.sku
         const price = req.body.price
         const description = req.body.description
-        const featured_image = req.body.name.featured_image
+        const featured_image = req.body['featured-image']
         const gallery = req.body.gallery
 
         const product = new Product({name, sku, price, description, featured_image, gallery})
@@ -25,9 +25,9 @@ class ProductController {
     }
 
     static async renderProductPage(req, res){
-        const id = req.params.id
+        const sku = req.params.sku
 
-        const product = await Product.getProductById(id)
+        const product = await Product.findOne({sku: sku}).lean()
         res.render('products/product', {product})
     }
 

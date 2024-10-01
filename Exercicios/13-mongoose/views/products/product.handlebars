@@ -2,7 +2,10 @@
         <h2>{{product.name}}</h2>
         <p>{{product.description}}</p>
         <small>{{product.price}}</small>
-        <img src="{{product.image}}" alt="{{this.image}}">
+        <img src="{{product.featured_image}}" alt="{{this.name}}">
         <a href="/products/edit/{{product._id}}">editar</a>
         <a href="/products/remove/{{product._id}}">remover</a>
+        {{#each product.gallery}}
+                <img src="{{this}}" alt="{{this}}">
+        {{/each}}
 </div>

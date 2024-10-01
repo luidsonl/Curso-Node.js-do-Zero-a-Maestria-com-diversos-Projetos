@@ -1,9 +1,9 @@
 const priceInput = document.getElementById('price-input')
 const nameInput = document.getElementById('name-input')
 const skuInput = document.getElementById('sku-input')
-const addGaleryInputButton = document.getElementById('add-galery-input')
+const addGalleryInputButton = document.getElementById('add-gallery-input')
 
-let galeryCounter = 0
+let galleryCounter = 0
 
 function isNumeric(value) {
     var regex = /^[0-9.,]*$/;
@@ -22,13 +22,13 @@ function addMediaInput() {
 
     const newInput = document.createElement('input')
     newInput.type = 'text'
-    newInput.name = 'gallery['+ galeryCounter +']'
+    newInput.name = 'gallery['+ galleryCounter +']'
     newInput.placeholder = 'Insira o link da mídia'
 
     formControl.appendChild(newInput)
 
-    document.querySelector('.form-galery').appendChild(formControl)
-    galeryCounter ++
+    document.querySelector('.form-gallery').appendChild(formControl)
+    galleryCounter ++
 };
 
 
@@ -41,7 +41,7 @@ nameInput.addEventListener('input', function(e){
     skuInput.value = formatSku(nameInput.value)
 })
 
-addGaleryInputButton.addEventListener('click', addMediaInput)
+addGalleryInputButton.addEventListener('click', addMediaInput)
 
 priceInput.addEventListener('input', function (e) {
     let value = e.target.value;

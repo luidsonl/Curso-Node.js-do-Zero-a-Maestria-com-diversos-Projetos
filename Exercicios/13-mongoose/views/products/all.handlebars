@@ -2,10 +2,12 @@
 
 <div class="products">
     {{#each products}}
-        <h2>{{this.name}}</h2>
-        <small>{{this.price}}</small>
-        <img src="{{this.image}}" alt="{{this.image}}">
-        <a href="/products/{{this._id}}">detalhes</a>
+        <div class="product-card">
+            <h2>{{this.name}}</h2>
+            <small>{{this.price}}R$</small>
+            <img src="{{this.featured_image}}" alt="{{this.name}}"/>
+            <a href="/products/{{this.sku}}">detalhes</a>
+        </div>
     {{/each}}
 
 </div>
