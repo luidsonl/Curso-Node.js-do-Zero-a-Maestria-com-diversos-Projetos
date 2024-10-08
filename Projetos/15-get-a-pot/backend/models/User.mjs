@@ -20,8 +20,9 @@ const User = conn.model(
             image:{
                 type: String
             },
-            is_artisan:{
-                type: Boolean
+            isArtisan:{
+                type: Boolean,
+                default: false
             },
             phone:{
                 type: String
