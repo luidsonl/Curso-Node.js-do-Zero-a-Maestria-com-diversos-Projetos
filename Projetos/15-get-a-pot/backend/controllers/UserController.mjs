@@ -94,6 +94,20 @@ class UserController {
 
     await createUserToken(userFound, req, res)
   }
+
+  static async checkUser(req, res){
+    let currentUser
+
+    console.log(req.headers.authorization)
+
+    if(req.headers.Authorization){
+
+    }else{
+      currentUser = null
+    }
+
+    res.status(200).send(currentUser)
+  }
 }
 
 export default UserController;
