@@ -3,6 +3,8 @@ import UserController from '../controllers/UserController.mjs'
 
 const UserRoutes = express.Router()
 
-UserRoutes.post('/', UserController.register)
+UserRoutes.post('/register', UserController.register)
+
+UserRoutes.post('/login', UserController.login)
 
 export default UserRoutes

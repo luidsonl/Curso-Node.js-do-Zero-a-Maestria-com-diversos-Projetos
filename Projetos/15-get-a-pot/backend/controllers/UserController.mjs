@@ -1,5 +1,6 @@
 import User from '../models/User.mjs';
 import bcrypt from 'bcrypt'
+import createUserToken from '../helpers/create-user-token.mjs'
 
 class UserController {
   static async register(req, res) {
@@ -29,9 +30,9 @@ class UserController {
       return
     }
 
-    const userExists = await User.findOne({"email": email})
+    const userFound = await User.findOne({"email": email})
 
-    if(userExists){
+    if(userFound){
       res.status(422).json({message: 'Usuário com esse email já existe'})
       return
     }
@@ -51,9 +52,9 @@ class UserController {
 
     try {
       const newUser = await user.save()
+      await createUserToken(newUser, req, res)
       res.status(201).json({
         message: 'Usuário criado',
-        newUser,
       })
       return
 
@@ -63,6 +64,35 @@ class UserController {
     }
     
  
+  }
+
+  static async login(req, res){
+    const {email, password} = req.body
+
+    if (!email){
+      res.status(422).json({message: 'Campo email é obrigatório'})
+      return
+    }
+    if (!password){
+      res.status(422).json({message: 'Campo password é obrigatório'})
+      return
+    }
+
+    const userFound = await User.findOne({"email": email})
+
+    if(!userFound){
+      res.status(422).json({message: 'Email ou senha incorreto'})
+      return
+    }
+
+    const checkPassword = await bcrypt.compare(password, userFound.password)
+    if(!checkPassword){
+      res.status(422).json({
+        message: 'Email ou senha incorreto'
+      })
+    }
+
+    await createUserToken(userFound, req, res)
   }
 }
 
