@@ -30,7 +30,20 @@ const Pot = conn.model(
             tags:{
                 type: [{ type: String }]
             },
-            artisan: Object
+            available: {
+                type: Boolean,
+                required: true,
+            },
+            artisan: {
+                type: Schema.Types.ObjectId,
+                ref: 'User',
+                required: true,
+            },
+            owner:{
+                type: Schema.Types.ObjectId,
+                ref: 'User',
+                required: true,
+            }
         },{
             timestamps: true
         }
