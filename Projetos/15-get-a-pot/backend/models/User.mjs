@@ -15,7 +15,8 @@ const User = conn.model(
                 required: true
             },
             password:{
-                type: String
+                type: String,
+                required: true
             },
             image:{
                 type: String
