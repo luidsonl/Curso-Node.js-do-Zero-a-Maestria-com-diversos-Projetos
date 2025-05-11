@@ -1,6 +1,9 @@
 import User from '../models/User.mjs';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+
 import createUserToken from '../helpers/create-user-token.mjs';
+import getToken from '../helpers/get-token.mjs';
 
 class UserController {
   static async register(req, res) {
@@ -89,7 +92,17 @@ class UserController {
     let currentUser;
     
     if (req.headers.authorization) {
-      const token = req.headers.authorization.split(' ')[1];
+      const token = await getToken(req);
+
+      const decoded = jwt.verify(token, 'warispeace');
+
+
+      currentUser = await User.findById(decoded.id);
+
+      if(currentUser){
+        console.log(currentUser);
+        currentUser.password = undefined;
+      }
       
       
     } else {
