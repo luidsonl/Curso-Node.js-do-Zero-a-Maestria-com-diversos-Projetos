@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test":  "node --experimental-vm-modules node_modules/jest/bin/jest.js --passWithNoTests",
     "start": "nodemon index.mjs localhost:5000"
   },
   "keywords": [],
@@ -19,5 +19,8 @@
     "mongoose": "^8.7.0",
     "multer": "^1.4.5-lts.1",
     "nodemon": "^3.1.7"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   }
 }
