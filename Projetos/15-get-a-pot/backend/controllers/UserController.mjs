@@ -134,6 +134,12 @@ class UserController {
       });
     }
   }
+
+  static async editUser(req, res){
+    return res.status(200).json({
+      message: 'Chegou aqui'
+    })
+  }
 }
 
 export default UserController;
