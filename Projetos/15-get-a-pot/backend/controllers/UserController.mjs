@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import createUserToken from '../helpers/createUserToken.mjs';
 import getToken from '../helpers/getToken.mjs';
 import validateRequiredFields from '../helpers/validateRequiredFields.mjs';
+import getUserByToken from '../helpers/getUserByToken.mjs';
 
 class UserController {
   // Método de validação de campos para reutilização
@@ -136,6 +137,36 @@ class UserController {
   }
 
   static async editUser(req, res){
+
+    const token = await getToken(req)
+    const user = await getUserByToken(token);
+
+    if (!user) {
+      return res.status(404).json({ message: 'Usuário não encontrado' });
+    }
+
+    const { name, email, password, confirmPassword, image, isArtisan, phone } = req.body;
+
+    const requiredFields = {
+        name: 'name',
+        email: 'email',
+        password: 'password',
+        confirmPassword: 'confirmPassword'
+      };
+      
+    if (!validateRequiredFields(req, res, requiredFields)) return;
+
+    const userExists = await User.findOne({email: email})
+    if (user.email !== email && userExists){
+      res.status(422).json({
+        message: 'Email indisponível'
+      })
+      return;
+    }
+
+    
+
+
     return res.status(200).json({
       message: 'Chegou aqui'
     })
