@@ -15,5 +15,3 @@ app.use(express.static('public'))
 app.use('/users', UserRoutes)
 
 app.listen(5000)
-
-export default app
