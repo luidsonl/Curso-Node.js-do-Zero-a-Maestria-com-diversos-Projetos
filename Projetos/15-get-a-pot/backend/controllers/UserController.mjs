@@ -19,7 +19,7 @@ class UserController {
         confirmPassword: 'confirmPassword'
       };
       
-      if (validateRequiredFields(req, res, requiredFields)) return;
+      if (!validateRequiredFields(req, res, requiredFields)) return;
       
       if (password !== confirmPassword) {
         return res.status(422).json({ 
@@ -65,7 +65,7 @@ class UserController {
         password: 'password'
       };
       
-      if (validateRequiredFields(req, res, requiredFields)) return;
+      if (!validateRequiredFields(req, res, requiredFields)) return;
       
       const user = await User.findOne({ email });
       if (!user) {
