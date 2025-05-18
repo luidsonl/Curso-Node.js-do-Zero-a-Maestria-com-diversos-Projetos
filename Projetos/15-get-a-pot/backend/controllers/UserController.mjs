@@ -1,20 +1,12 @@
 import User from '../models/User.mjs';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import createUserToken from '../helpers/create-user-token.mjs';
-import getToken from '../helpers/get-token.mjs';
+import createUserToken from '../helpers/createUserToken.mjs';
+import getToken from '../helpers/getToken.mjs';
+import validateRequiredFields from '../helpers/validateRequiredFields.mjs';
 
 class UserController {
   // Método de validação de campos para reutilização
-  static validateRequiredFields(req, res, fields) {
-    for (const [field, label] of Object.entries(fields)) {
-      if (!req.body[field]) {
-        res.status(422).json({ message: `Campo ${label} é obrigatório` });
-        return false;
-      }
-    }
-    return true;
-  }
 
   static async register(req, res) {
     try {
@@ -27,7 +19,7 @@ class UserController {
         confirmPassword: 'confirmPassword'
       };
       
-      if (!this.validateRequiredFields(req, res, requiredFields)) return;
+      if (validateRequiredFields(req, res, requiredFields)) return;
       
       if (password !== confirmPassword) {
         return res.status(422).json({ 
@@ -73,7 +65,7 @@ class UserController {
         password: 'password'
       };
       
-      if (!this.validateRequiredFields(req, res, requiredFields)) return;
+      if (validateRequiredFields(req, res, requiredFields)) return;
       
       const user = await User.findOne({ email });
       if (!user) {
