@@ -1,4 +1,4 @@
-import UserController from '../UserController.mjs'
+import UserController from '../../controllers/UserController.mjs'
 
 
 describe("Test pass", ()=>{

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test":  "node --experimental-vm-modules node_modules/jest/bin/jest.js --passWithNoTests",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --passWithNoTests",
     "start": "nodemon index.mjs localhost:5000"
   },
   "keywords": [],
@@ -14,6 +14,7 @@
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
     "express": "^4.21.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.7.0",
@@ -21,6 +22,7 @@
     "nodemon": "^3.1.7"
   },
   "devDependencies": {
-    "jest": "^29.7.0"
+    "jest": "^29.7.0",
+    "mongodb-memory-server": "^10.1.4"
   }
 }
