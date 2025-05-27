@@ -5,8 +5,10 @@ async function getToken(req) {
     if(!authHeader){
         return null;
     }
-    const token = authHeader.split(' ')[1];
-
+    let token = authHeader.split(' ')[1];
+    if(!token){
+        token = authHeader;
+    }
     return token;
 }
 

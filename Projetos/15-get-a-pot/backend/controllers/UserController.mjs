@@ -96,6 +96,7 @@ class UserController {
       }
       
       const token = await getToken(req);
+      console.log(token)
       const decoded = jwt.verify(token, 'warispeace');
       
       const currentUser = await User.findById(decoded.id).select('-password');
