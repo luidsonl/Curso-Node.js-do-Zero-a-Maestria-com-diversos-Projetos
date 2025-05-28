@@ -175,17 +175,29 @@ class UserController {
     }
 
     
-  Object.entries(fieldsToUpdate).forEach(([key, value]) => {
-    if (value !== undefined) {
-      user[key] = value;
+    Object.entries(fieldsToUpdate).forEach(([key, value]) => {
+      if (value !== undefined) {
+        user[key] = value;
+      }
+    });
+
+    try {
+      const updatedUser = await User.findOneAndUpdate(
+        {_id: user.id},
+        {$set: user},
+        {new: true}
+      );
+      return res.status(200).json({
+        message:'Usuário atualizado com sucesso',
+        user: updatedUser
+      })
+    } catch (error) {
+      return res.status(500).json({
+        message: error
+      })
+
+     
     }
-  });
-
-
-    return res.status(200).json({
-      message: 'Chegou aqui',
-      user: user
-    })
   }
 }
 
