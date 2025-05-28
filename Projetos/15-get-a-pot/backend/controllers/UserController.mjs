@@ -96,7 +96,7 @@ class UserController {
       }
       
       const token = await getToken(req);
-      console.log(token)
+      
       const decoded = jwt.verify(token, 'warispeace');
       
       const currentUser = await User.findById(decoded.id).select('-password');
@@ -146,30 +146,45 @@ class UserController {
       return res.status(404).json({ message: 'Usuário não encontrado' });
     }
 
-    const { name, email, password, confirmPassword, image, isArtisan, phone } = req.body;
+    // name, email, password, confirmPassword, image, isArtisan, phone
+    const fieldsToUpdate = req.body;
 
-    const requiredFields = {
-        name: 'name',
-        email: 'email',
-        password: 'password',
-        confirmPassword: 'confirmPassword'
-      };
-      
-    if (!validateRequiredFields(req, res, requiredFields)) return;
+    if(fieldsToUpdate.email != undefined){
+      const emailInUse = !!(await User.findOne({email: fieldsToUpdate.email}))
 
-    const userExists = await User.findOne({email: email})
-    if (user.email !== email && userExists){
-      res.status(422).json({
-        message: 'Email indisponível'
-      })
-      return;
+      if (user.email !== fieldsToUpdate.email && emailInUse){
+        res.status(422).json({
+          message: 'Email indisponível'
+        })
+        return;
+      }
+    }
+    
+    if(fieldsToUpdate.password != undefined){
+      if(fieldsToUpdate.password != fieldsToUpdate.confirmPassword){
+        res.status(422).json({
+          message: 'As senhas não conferem!'
+        })
+        return;
+      }else{
+        const salt = await bcrypt.genSalt(10);
+        const passwordHash = await bcrypt.hash(fieldsToUpdate.password, salt);
+
+        fieldsToUpdate.password = passwordHash;
+      }
     }
 
     
+  Object.entries(fieldsToUpdate).forEach(([key, value]) => {
+    if (value !== undefined) {
+      user[key] = value;
+    }
+  });
 
 
     return res.status(200).json({
-      message: 'Chegou aqui'
+      message: 'Chegou aqui',
+      user: user
     })
   }
 }

@@ -1,14 +1,11 @@
 
 async function getToken(req) {
     const authHeader = req.headers.authorization;
+    if (!authHeader) return null;
 
-    if(!authHeader){
-        return null;
-    }
-    let token = authHeader.split(' ')[1];
-    if(!token){
-        token = authHeader;
-    }
+    const parts = authHeader.split(' ');
+    const token = parts.length === 2 ? parts[1] : authHeader;
+
     return token;
 }
 

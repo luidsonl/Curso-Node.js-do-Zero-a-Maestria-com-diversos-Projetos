@@ -8,6 +8,6 @@ UserRoutes.post('/register', UserController.register);
 UserRoutes.post('/login', UserController.login);
 UserRoutes.get('/checkuser', UserController.checkUser);
 UserRoutes.get('/:id', UserController.getUserById);
-UserRoutes.patch('/edit/:id', verifyToken, UserController.editUser)
+UserRoutes.patch('/edit', verifyToken, UserController.editUser)
 
 export default UserRoutes
