@@ -143,7 +143,7 @@ class UserController {
     const user = await getUserByToken(token);
 
     if(req.file){
-      const image = req.file.filename;
+      user.image = req.file.filename;
     }
 
     if (!user) {
