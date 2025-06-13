@@ -142,6 +142,10 @@ class UserController {
     const token = await getToken(req)
     const user = await getUserByToken(token);
 
+    if(req.file){
+      const image = req.file.filename;
+    }
+
     if (!user) {
       return res.status(404).json({ message: 'Usuário não encontrado' });
     }
