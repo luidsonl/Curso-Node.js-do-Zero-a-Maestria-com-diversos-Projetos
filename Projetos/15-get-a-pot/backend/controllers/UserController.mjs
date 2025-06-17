@@ -5,6 +5,7 @@ import createUserToken from '../helpers/createUserToken.mjs';
 import getToken from '../helpers/getToken.mjs';
 import validateRequiredFields from '../helpers/validateRequiredFields.mjs';
 import getUserByToken from '../helpers/getUserByToken.mjs';
+import FileService from '../services/FileService.mjs';
 
 class UserController {
   // Método de validação de campos para reutilização
@@ -143,6 +144,10 @@ class UserController {
     const user = await getUserByToken(token);
 
     if(req.file){
+      if (user.image){
+        console.log(user.image)
+        FileService.removeFile('profile-pictures', user.image );
+      }
       user.image = req.file.filename;
     }
 
