@@ -3,9 +3,12 @@ import PotController from '../controllers/PotController.mjs';
 
 
 
-const PotEoutes = express.Router();
+const PotRoutes = express.Router();
 
-UserRoutes.post('/create', PotController.register);
+PotRoutes.post('/create', PotController.create);
+PotRoutes.get('/:id', PotController.getById);
+PotRoutes.patch('/update', PotController.update);
+PotRoutes.delete('/delete', PotController.delete);
 
 
-export default PotEoutes
+export default PotRoutes
