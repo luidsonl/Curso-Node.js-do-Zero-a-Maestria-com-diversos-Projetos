@@ -7,8 +7,8 @@ const UserRoutes = express.Router();
 
 UserRoutes.post('/register', UserController.register);
 UserRoutes.post('/login', UserController.login);
-UserRoutes.get('/checkuser', UserController.checkUser);
-UserRoutes.get('/:id', UserController.getUserById);
-UserRoutes.patch('/edit', verifyToken, profilePictureUpload().single('image'), UserController.editUser)
+UserRoutes.get('/check', UserController.check);
+UserRoutes.get('/:id', UserController.getById);
+UserRoutes.patch('/update', verifyToken, profilePictureUpload().single('image'), UserController.updarte)
 
 export default UserRoutes

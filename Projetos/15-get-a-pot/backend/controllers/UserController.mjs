@@ -90,7 +90,7 @@ class UserController {
     }
   }
 
-  static async checkUser(req, res) {
+  static async check(req, res) {
     try {
       if (!req.headers.authorization) {
         return res.status(401).json({ message: 'Acesso negado: token não fornecido' });
@@ -117,7 +117,7 @@ class UserController {
     }
   }
 
-  static async getUserById(req, res) {
+  static async getById(req, res) {
     try {
       const id = req.params.id;
       
@@ -138,7 +138,7 @@ class UserController {
     }
   }
 
-  static async editUser(req, res){
+  static async updarte(req, res){
 
     const token = await getToken(req)
     const user = await getUserByToken(token);
