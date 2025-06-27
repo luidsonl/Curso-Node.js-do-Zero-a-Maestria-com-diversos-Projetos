@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import getToken from './getToken.mjs';
+import getToken from '../helpers/getToken.mjs';
 
 //middleware
 async function verifyToken(req, res, next){

@@ -138,14 +138,13 @@ class UserController {
     }
   }
 
-  static async updarte(req, res){
+  static async update(req, res){
 
     const token = await getToken(req)
     const user = await getUserByToken(token);
 
     if(req.file){
       if (user.image){
-        console.log(user.image)
         FileService.removeFile('profile-pictures', user.image );
       }
       user.image = req.file.filename;
