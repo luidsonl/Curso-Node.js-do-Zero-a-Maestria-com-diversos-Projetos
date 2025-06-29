@@ -1,5 +1,4 @@
 import conn from '../db/conn.mjs'
-import User from './User.mjs'
 
 const {Schema} = conn
 

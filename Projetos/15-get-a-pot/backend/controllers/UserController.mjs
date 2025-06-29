@@ -6,51 +6,19 @@ import getToken from '../helpers/getToken.mjs';
 import validateRequiredFields from '../helpers/validateRequiredFields.mjs';
 import getUserByToken from '../helpers/getUserByToken.mjs';
 import FileService from '../services/FileService.mjs';
+import UserService from '../services/UserService.mjs';
 
 class UserController {
   // Método de validação de campos para reutilização
 
   static async register(req, res) {
+    const data = req.body;
+      
     try {
-      const { name, email, password, confirmPassword, image, isArtisan, phone } = req.body;
-      
-      const requiredFields = {
-        name: 'name',
-        email: 'email',
-        password: 'password',
-        confirmPassword: 'confirmPassword'
-      };
-      
-      if (!validateRequiredFields(req, res, requiredFields)) return;
-      
-      if (password !== confirmPassword) {
-        return res.status(422).json({ 
-          message: 'O password e o confirmPassword devem ser iguais' 
-        });
-      }
-      
-      const userFound = await User.findOne({ email });
-      if (userFound) {
-        return res.status(422).json({ message: 'Usuário com esse email já existe' });
-      }
-      
-      const salt = await bcrypt.genSalt(10);
-      const passwordHash = await bcrypt.hash(password, salt);
-      
-      const user = new User({
-        name,
-        email,
-        password: passwordHash,
-        image,
-        isArtisan: !!isArtisan,
-        phone
-      });
-      
-      const newUser = await user.save();
+      const newUser = await UserService.createUser(data)
       await createUserToken(newUser, req, res);
       
     } catch (error) {
-      console.error('Erro ao registrar usuário:', error);
       res.status(500).json({ 
         message: 'Erro ao registrar usuário', 
         error: error.message 
