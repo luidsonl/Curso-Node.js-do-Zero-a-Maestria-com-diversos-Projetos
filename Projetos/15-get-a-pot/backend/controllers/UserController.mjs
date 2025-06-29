@@ -9,7 +9,6 @@ import FileService from '../services/FileService.mjs';
 import UserService from '../services/UserService.mjs';
 
 class UserController {
-  // Método de validação de campos para reutilização
 
   static async register(req, res) {
     const data = req.body;
@@ -28,24 +27,9 @@ class UserController {
 
   static async login(req, res) {
     try {
-      const { email, password } = req.body;
-      
-      const requiredFields = {
-        email: 'email',
-        password: 'password'
-      };
-      
-      if (!validateRequiredFields(req, res, requiredFields)) return;
-      
-      const user = await User.findOne({ email });
-      if (!user) {
-        return res.status(422).json({ message: 'Email ou senha incorreto' });
-      }
-      
-      const passwordMatch = await bcrypt.compare(password, user.password);
-      if (!passwordMatch) {
-        return res.status(422).json({ message: 'Email ou senha incorreto' });
-      }
+      const data = req.body; 
+      const user = await UserService.loginUser(data);
+
       
       await createUserToken(user, req, res);
       

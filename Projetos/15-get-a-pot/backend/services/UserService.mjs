@@ -48,6 +48,36 @@ class UserService{
 
         return newUser;
     }
+
+    static async loginUser(data){
+        const { email, password } = data;
+              
+        const requiredFields = {
+            email: email,
+            password: password
+        };
+        
+        for (const [field, value] of Object.entries(requiredFields)){
+            if(!FieldValidator.requiredField(value)){
+                throw new Error(`Campo ${field} é obrigatório`);
+            }
+        }
+        
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            throw new Error('Email ou senha incorretos');
+        }
+        
+        const passwordMatch = await bcrypt.compare(password, user.password);
+
+        if (!passwordMatch) {
+            throw new Error('Email ou senha incorretos');
+        }
+
+        return user;
+              
+    }
 }
 
 export default UserService;
