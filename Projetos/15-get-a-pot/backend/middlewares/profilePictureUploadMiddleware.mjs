@@ -1,6 +1,6 @@
 import profilePictureUpload from '../helpers/profilePictureUpload.mjs';
 
-function imageUploadMiddleware (req, res, next) {
+function profilePictureUploadMiddleware (req, res, next) {
   profilePictureUpload().single('image')(req, res, (err) => {
     if (err) {
       return res.status(400).json({ 
@@ -14,4 +14,4 @@ function imageUploadMiddleware (req, res, next) {
 };
 
 
-export default imageUploadMiddleware;
+export default profilePictureUploadMiddleware;

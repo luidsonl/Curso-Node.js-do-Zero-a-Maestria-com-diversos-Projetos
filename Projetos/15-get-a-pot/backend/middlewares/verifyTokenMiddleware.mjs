@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import getToken from '../helpers/getToken.mjs';
 
 //middleware
-async function verifyToken(req, res, next){
+async function verifyTokenMiddleware(req, res, next){
     const token = await getToken(req)
 
     if(!token){
@@ -22,4 +22,4 @@ async function verifyToken(req, res, next){
     }
 }
 
-export default verifyToken;
+export default verifyTokenMiddleware;
