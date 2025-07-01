@@ -4,7 +4,6 @@ import jwt from 'jsonwebtoken';
 import createUserToken from '../helpers/createUserToken.mjs';
 import getToken from '../helpers/getToken.mjs';
 import validateRequiredFields from '../helpers/validateRequiredFields.mjs';
-import getUserByToken from '../helpers/getUserByToken.mjs';
 import FileService from '../services/FileService.mjs';
 import UserService from '../services/UserService.mjs';
 
@@ -52,7 +51,7 @@ class UserController {
       
       const decoded = jwt.verify(token, 'warispeace');
       
-      const currentUser = await User.findById(decoded.id).select('-password');
+      const currentUser = await UserService.getUserById(decoded.id);
       
       if (!currentUser) {
         return res.status(404).json({ message: 'Usuário não encontrado' });
@@ -73,7 +72,7 @@ class UserController {
     try {
       const id = req.params.id;
       
-      const user = await User.findById(id).select('-password');
+      const user = await UserService.getUserById(id);
       
       if (!user) {
         return res.status(404).json({ message: 'Usuário não encontrado' });
@@ -93,7 +92,11 @@ class UserController {
   static async update(req, res){
 
     const token = await getToken(req)
-    const user = await getUserByToken(token);
+    const user = await UserService.getUserByToken(token);
+
+    if (!user) {
+      return res.status(404).json({ message: 'Usuário não encontrado' });
+    }
 
     if(req.file){
       if (user.image){
@@ -101,16 +104,11 @@ class UserController {
       }
       user.image = req.file.filename;
     }
-
-    if (!user) {
-      return res.status(404).json({ message: 'Usuário não encontrado' });
-    }
-
-    // name, email, password, confirmPassword, image, isArtisan, phone
+    
     const fieldsToUpdate = req.body;
 
     if(fieldsToUpdate.email != undefined){
-      const emailInUse = !!(await User.findOne({email: fieldsToUpdate.email}))
+      const emailInUse = !!(await UserService.getOneUser({email: fieldsToUpdate.email}))
 
       if (user.email !== fieldsToUpdate.email && emailInUse){
         res.status(422).json({

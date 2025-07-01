@@ -1,6 +1,7 @@
 import FieldValidator from '../helpers/FieldValidator.mjs';
 import User from '../models/User.mjs';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 
 class UserService{
@@ -77,6 +78,37 @@ class UserService{
 
         return user;
               
+    }
+
+    static async getUserById(id){
+        const currentUser = await User.findById(id).select('-password');
+
+        return currentUser;
+    }
+
+    static async getUserByToken(token){
+
+        if(!token){
+            return null;
+        }
+
+        const decode = jwt.verify(token, 'warispeace');
+
+        const userId = decode.id;
+
+        const user = await User.findById(userId);
+        
+        return user;
+    }
+
+    static async getOneUser(data){
+        const user = await User.findOne(data)
+
+        return user
+    }
+
+    static async updateOneUser(data){
+
     }
 }
 
