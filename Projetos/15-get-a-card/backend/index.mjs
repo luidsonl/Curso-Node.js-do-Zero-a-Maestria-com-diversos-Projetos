@@ -2,12 +2,17 @@ import express, { json } from 'express'
 import cors from 'cors'
 import UserRoutes from './routes/UserRoutes.mjs'
 import CardRoutes from './routes/CardRoutes.mjs'
+import dotenv from 'dotenv';
 
+dotenv.config();
+
+const FRONTEND = process.env.FRONTEND;
+const PORT = process.env.PORT;
 
 const app = express()
 app.use(express.json())
 
-app.use(cors({credentials: true, origin: 'https://localhost:3000'}))
+app.use(cors({credentials: true, origin: FRONTEND}))
 
 app.use(express.static('public'))
 
@@ -16,4 +21,4 @@ app.use(express.static('public'))
 app.use('/users', UserRoutes)
 app.use('/cards', CardRoutes)
 
-app.listen(5000)
+app.listen(PORT)
