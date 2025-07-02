@@ -1,11 +1,10 @@
 import User from '../models/User.mjs';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import createUserToken from '../helpers/createUserToken.mjs';
 import getToken from '../helpers/getToken.mjs';
-import validateRequiredFields from '../helpers/validateRequiredFields.mjs';
 import FileService from '../services/FileService.mjs';
 import UserService from '../services/UserService.mjs';
+import AuthService from '../services/AuthService.mjs';
 
 class UserController {
 
@@ -13,8 +12,14 @@ class UserController {
     const data = req.body;
       
     try {
-      const newUser = await UserService.createUser(data)
-      await createUserToken(newUser, req, res);
+      const newUser = await UserService.createUser(data);
+      const userToken = await AuthService.createUserToken(newUser);
+
+      res.status(200).json({
+        message: 'Você está autenticado',
+        token: userToken,
+        userId: newUser ._id
+      })
       
     } catch (error) {
       res.status(500).json({ 
@@ -29,8 +34,13 @@ class UserController {
       const data = req.body; 
       const user = await UserService.loginUser(data);
 
+      const userToken = await AuthService.createUserToken(user);
       
-      await createUserToken(user, req, res);
+      res.status(200).json({
+        message: 'Você está autenticado',
+        token: userToken,
+        userId: user ._id
+      })
       
     } catch (error) {
       res.status(500).json({ 
@@ -48,7 +58,7 @@ class UserController {
       
       const token = await getToken(req);
       
-      const decoded = jwt.verify(token, 'warispeace');
+      const decoded = AuthService.decodeToken(token);
       
       const currentUser = await UserService.getUserById(decoded.id);
       

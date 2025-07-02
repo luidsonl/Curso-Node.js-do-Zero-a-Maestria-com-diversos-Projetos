@@ -1,5 +1,5 @@
-import jwt from 'jsonwebtoken'
 import getToken from '../helpers/getToken.mjs';
+import AuthService from '../services/AuthService.mjs';
 
 //middleware
 async function verifyTokenMiddleware(req, res, next){
@@ -12,7 +12,7 @@ async function verifyTokenMiddleware(req, res, next){
     }
 
     try {
-        const verified = jwt.verify(token, 'warispeace')
+        const verified = AuthService.decodeToken(token)
         req.user = verified
         next()
     } catch (error) {

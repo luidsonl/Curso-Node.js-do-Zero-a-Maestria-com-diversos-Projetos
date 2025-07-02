@@ -2,6 +2,7 @@ import FieldValidator from '../helpers/FieldValidator.mjs';
 import User from '../models/User.mjs';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import AuthService from './AuthService.mjs';
 
 
 class UserService{
@@ -92,7 +93,7 @@ class UserService{
             return null;
         }
 
-        const decode = jwt.verify(token, 'warispeace');
+        const decode = AuthService.decodeToken(token);
 
         const userId = decode.id;
 
