@@ -33,7 +33,6 @@ class UserController {
       await createUserToken(user, req, res);
       
     } catch (error) {
-      console.error('Erro ao fazer login:', error);
       res.status(500).json({ 
         message: 'Erro ao fazer login', 
         error: error.message 

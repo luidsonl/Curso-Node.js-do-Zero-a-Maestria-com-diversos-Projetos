@@ -1,7 +1,7 @@
 import express, { json } from 'express'
 import cors from 'cors'
 import UserRoutes from './routes/UserRoutes.mjs'
-import PotRoutes from './routes/PotRoutes.mjs'
+import CardRoutes from './routes/CardRoutes.mjs'
 
 
 const app = express()
@@ -14,6 +14,6 @@ app.use(express.static('public'))
 
 //routes
 app.use('/users', UserRoutes)
-app.use('/pots', PotRoutes)
+app.use('/cards', CardRoutes)
 
 app.listen(5000)

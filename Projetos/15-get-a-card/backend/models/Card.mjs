@@ -2,8 +2,8 @@ import conn from '../db/conn.mjs'
 
 const {Schema} = conn
 
-const Pot = conn.model(
-    'Pot',
+const Card = conn.model(
+    'Card',
     new Schema(
         {
             title:{
@@ -46,4 +46,4 @@ const Pot = conn.model(
     )
 )
 
-export default Pot
+export default Card

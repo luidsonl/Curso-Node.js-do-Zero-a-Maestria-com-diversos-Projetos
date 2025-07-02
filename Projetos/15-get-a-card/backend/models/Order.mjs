@@ -6,9 +6,9 @@ const Order = conn.model(
     'Order',
     new Schema(
         {
-            pot: {
+            card: {
                 type: Schema.Types.ObjectId,
-                ref: 'Pot',
+                ref: 'Card',
                 required: true,
             },
             seller: {

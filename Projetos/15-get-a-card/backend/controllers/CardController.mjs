@@ -1,5 +1,5 @@
 
-class PotController{
+class CardController{
     static async create(req, res){
         res.json({message: 'lero lero lero lero lero'})
     }
@@ -29,4 +29,4 @@ class PotController{
     }
 }
 
-export default PotController;
+export default CardController;

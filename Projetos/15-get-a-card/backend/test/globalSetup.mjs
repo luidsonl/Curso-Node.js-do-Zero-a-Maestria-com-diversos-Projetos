@@ -8,7 +8,7 @@ let mongoServer;
 export default async () => {
   mongoServer = await MongoMemoryServer.create();
   const mongoUri = mongoServer.getUri();
-  process.env.MONGO_URI = mongoUri + 'getapot';
+  process.env.MONGO_URI = mongoUri + 'getacard';
 };
 
 
