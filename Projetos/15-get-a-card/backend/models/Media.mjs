@@ -17,7 +17,7 @@ const Media = conn.model(
             type: String,
             required: true
         },
-        path:{
+        filePath:{
             type: String,
             required: true
         },
