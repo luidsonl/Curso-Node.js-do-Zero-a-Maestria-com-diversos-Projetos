@@ -2,7 +2,7 @@ import User from '../models/User.mjs';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import getToken from '../helpers/getToken.mjs';
-import FileService from '../services/FileService.mjs';
+import FileService from '../services/MediaService.mjs';
 import UserService from '../services/UserService.mjs';
 import AuthService from '../services/AuthService.mjs';
 

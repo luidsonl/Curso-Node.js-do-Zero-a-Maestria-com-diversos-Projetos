@@ -2,7 +2,9 @@ import express, { json } from 'express'
 import cors from 'cors'
 import UserRoutes from './routes/UserRoutes.mjs'
 import CardRoutes from './routes/CardRoutes.mjs'
+import fileUpload from 'express-fileupload';
 import dotenv from 'dotenv';
+import MediaRoutes from './routes/MediaRountes.mjs';
 
 dotenv.config();
 
@@ -14,11 +16,14 @@ app.use(express.json())
 
 app.use(cors({credentials: true, origin: FRONTEND}))
 
+app.use(fileUpload())
+
 app.use(express.static('public'))
 
 
 //routes
 app.use('/users', UserRoutes)
 app.use('/cards', CardRoutes)
+app.use('/files', MediaRoutes)
 
 app.listen(PORT)

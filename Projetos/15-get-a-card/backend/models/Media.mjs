@@ -11,8 +11,7 @@ const Media = conn.model(
         },
         uploadedBy:{
             type: Schema.Types.ObjectId,
-            ref: 'User',
-            required: true,
+            ref: 'User'
         },
         extension:{
             type: String,
