@@ -19,7 +19,9 @@ const User = conn.model(
                 required: true
             },
             image:{
-                type: String
+                type: Schema.Types.ObjectId,
+                ref: 'Media',
+                required: true,
             },
             isArtisan:{
                 type: Boolean,

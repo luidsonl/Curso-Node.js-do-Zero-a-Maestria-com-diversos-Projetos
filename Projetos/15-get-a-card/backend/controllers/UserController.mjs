@@ -109,7 +109,7 @@ class UserController {
 
     if(req.file){
       if (user.image){
-        FileService.removeFile('profile-pictures', user.image );
+        FileService.remove();
       }
       user.image = req.file.filename;
     }
