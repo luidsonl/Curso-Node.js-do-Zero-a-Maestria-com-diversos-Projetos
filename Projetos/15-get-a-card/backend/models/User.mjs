@@ -6,6 +6,11 @@ const User = conn.model(
     'User',
     new Schema(
         {
+            status: {
+                type: String,
+                enum: ['active', 'inactive', 'pending', 'banned'],
+                default: 'pending'
+            },
             name:{
                 type: String,
                 required: true
@@ -22,9 +27,9 @@ const User = conn.model(
                 type: Schema.Types.ObjectId,
                 ref: 'Media'
             },
-            isArtisan:{
-                type: Boolean,
-                default: false
+            alchemy:{
+                type: Number,
+                default: 0
             },
             phone:{
                 type: String

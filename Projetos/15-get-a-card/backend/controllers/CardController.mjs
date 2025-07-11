@@ -6,7 +6,7 @@ class CardController{
 
     static async getById(req, res){
         try {
-            const { title, description, price, featured_image, gallery, isArtisan, phone } = req.body;
+            const { title, description, price, featured_image, gallery, phone } = req.body;
 
 
         } catch (error) {

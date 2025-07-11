@@ -10,7 +10,7 @@ import pick from '../helpers/pick.mjs';
 class UserController {
 
   static async register(req, res) {
-    const data = pick(req.body, ['name', 'email', 'password', 'confirmPassword', 'image', 'isArtisan', 'phone']);
+    const data = pick(req.body, ['name', 'email', 'password', 'confirmPassword', 'image', 'phone']);
       
     try {
       const newUser = await UserService.createUser(data);
@@ -103,14 +103,14 @@ class UserController {
     const token = await getToken(req);
 
 
-    const data = pick(req.body, ['name', 'email', 'password', 'confirmPassword', 'isArtisan', 'phone']);
+    const data = pick(req.body, ['name', 'email', 'password', 'confirmPassword', 'phone']);
     data['image'] = req.files.image;
 
     try {
       const updatedUser = await UserService.updateOneUser(token, data)
       return res.status(200).json(updatedUser);
     } catch (error) {
-      return res.status(500).json({ 
+      return res.status(error.code?? 500).json({ 
         message: 'Erro ao atualizar usuário', 
         error: error.message 
       });

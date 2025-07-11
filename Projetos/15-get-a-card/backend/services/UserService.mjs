@@ -43,13 +43,13 @@ class UserService{
             name,
             email,
             password: passwordHash,
-            isArtisan: !!isArtisan,
             phone
         });
         
         const newUser = await user.save();
-
-        return newUser;
+        const userObj = newUser.toObject();
+        delete userObj.password;
+        return userObj;
     }
 
     static async loginUser(data){
@@ -115,30 +115,36 @@ class UserService{
 
         const userToUpdate = await this.getUserByToken(token);
 
+       
         if (!userToUpdate) {
-            throw new Error('Acesso negado');
+            const error = new Error('Acesso negado');
+            error.code = 404;
+            throw error;
         }
 
-        if(email != undefined){
-            const emailInUse = !!(await this.getOneUser({email: email}))
+        if (email !== undefined) {
+            const emailInUse = !!(await this.getOneUser({ email }));
 
-            if (userToUpdate.email !== email && emailInUse){
-                throw new Error('Email indisponível');
+            if (userToUpdate.email !== email && emailInUse) {
+            const error = new Error('Email indisponível');
+            error.code = 409;
+            throw error;
             }
         }
 
-        if(password != undefined){
-            if(password != confirmPassword){
-                throw new Error('As senhas não conferem');
-            }else{
+        if (password !== undefined) {
+            if (password !== confirmPassword) {
+            const error = new Error('As senhas não conferem');
+            error.code = 400;
+            throw error;
+            } else {
             const salt = await bcrypt.genSalt(10);
-            const passwordHash = await bcrypt.hash(data.password, salt);
-    
+            const passwordHash = await bcrypt.hash(password, salt);
             userToUpdate.password = passwordHash;
             }
         }
         
-        const fieldsToUpdate = pick(data, ['name', 'email', 'isArtisan', 'phone'])
+        const fieldsToUpdate = pick(data, ['name', 'email', 'phone'])
         
         Object.entries(fieldsToUpdate).forEach(([key, value]) => {
 
@@ -157,7 +163,7 @@ class UserService{
             {_id: userToUpdate._id},
             {$set: userToUpdate},
             {new: true}
-        );
+        ).select('-password');
         
         return updatedUser;
         
