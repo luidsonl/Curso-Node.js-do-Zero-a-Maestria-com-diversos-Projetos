@@ -3,12 +3,14 @@ import User from '../models/User.mjs';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import AuthService from './AuthService.mjs';
+import pick from '../helpers/pick.mjs';
+import MediaService from './MediaService.mjs';
 
 
 class UserService{
     static async createUser(data){
 
-        const { name, email, password, confirmPassword, image, isArtisan, phone } = data;
+        const { name, email, password, confirmPassword, isArtisan, phone } = data;
 
 
         const requiredFields = {
@@ -41,7 +43,6 @@ class UserService{
             name,
             email,
             password: passwordHash,
-            image,
             isArtisan: !!isArtisan,
             phone
         });
@@ -108,7 +109,58 @@ class UserService{
         return user
     }
 
-    static async updateOneUser(data){
+    static async updateOneUser(token, data){
+
+        const { email, password, confirmPassword, image } = data;
+
+        const userToUpdate = await this.getUserByToken(token);
+
+        if (!userToUpdate) {
+            throw new Error('Acesso negado');
+        }
+
+        if(email != undefined){
+            const emailInUse = !!(await this.getOneUser({email: email}))
+
+            if (userToUpdate.email !== email && emailInUse){
+                throw new Error('Email indisponível');
+            }
+        }
+
+        if(password != undefined){
+            if(password != confirmPassword){
+                throw new Error('As senhas não conferem');
+            }else{
+            const salt = await bcrypt.genSalt(10);
+            const passwordHash = await bcrypt.hash(data.password, salt);
+    
+            userToUpdate.password = passwordHash;
+            }
+        }
+        
+        const fieldsToUpdate = pick(data, ['name', 'email', 'isArtisan', 'phone'])
+        
+        Object.entries(fieldsToUpdate).forEach(([key, value]) => {
+
+            if (value !== undefined) {
+            userToUpdate[key] = value;
+            }
+        });
+
+        
+        if(image){
+            const profilePicture = await MediaService.create(image, userToUpdate);
+            userToUpdate.profilePicture = profilePicture;
+        }
+
+        const updatedUser = await User.findOneAndUpdate(
+            {_id: userToUpdate._id},
+            {$set: userToUpdate},
+            {new: true}
+        );
+        
+        return updatedUser;
+        
 
     }
 }

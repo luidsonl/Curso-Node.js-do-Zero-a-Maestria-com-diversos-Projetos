@@ -41,13 +41,13 @@ class MediaService {
 
     const media = new Media({
       name: name,
-      uploadedBy: user,
+      uploadedBy: user._id,
       mimetype: mimetype,
       filePath: filePath,
       size: size
     })
 
-    const newMedia = media.save();
+    const newMedia = await media.save();
 
     return newMedia;
   }

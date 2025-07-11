@@ -2,14 +2,15 @@ import User from '../models/User.mjs';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import getToken from '../helpers/getToken.mjs';
-import FileService from '../services/MediaService.mjs';
 import UserService from '../services/UserService.mjs';
 import AuthService from '../services/AuthService.mjs';
+import MediaService from '../services/MediaService.mjs';
+import pick from '../helpers/pick.mjs';
 
 class UserController {
 
   static async register(req, res) {
-    const data = req.body;
+    const data = pick(req.body, ['name', 'email', 'password', 'confirmPassword', 'image', 'isArtisan', 'phone']);
       
     try {
       const newUser = await UserService.createUser(data);
@@ -31,7 +32,7 @@ class UserController {
 
   static async login(req, res) {
     try {
-      const data = req.body; 
+      const data = pick(req.body, ['email', 'password']); 
       const user = await UserService.loginUser(data);
 
       const userToken = await AuthService.createUserToken(user);
@@ -90,7 +91,6 @@ class UserController {
       return res.status(200).json(user);
       
     } catch (error) {
-      console.error('Erro ao buscar usuário:', error);
       return res.status(500).json({ 
         message: 'Erro ao buscar usuário', 
         error: error.message 
@@ -100,71 +100,23 @@ class UserController {
 
   static async update(req, res){
 
-    const token = await getToken(req)
-    const user = await UserService.getUserByToken(token);
+    const token = await getToken(req);
 
-    if (!user) {
-      return res.status(404).json({ message: 'Usuário não encontrado' });
-    }
 
-    if(req.file){
-      if (user.image){
-        FileService.remove();
-      }
-      user.image = req.file.filename;
-    }
-    
-    const fieldsToUpdate = req.body;
-
-    if(fieldsToUpdate.email != undefined){
-      const emailInUse = !!(await UserService.getOneUser({email: fieldsToUpdate.email}))
-
-      if (user.email !== fieldsToUpdate.email && emailInUse){
-        res.status(422).json({
-          message: 'Email indisponível'
-        })
-        return;
-      }
-    }
-    
-    if(fieldsToUpdate.password != undefined){
-      if(fieldsToUpdate.password != fieldsToUpdate.confirmPassword){
-        res.status(422).json({
-          message: 'As senhas não conferem!'
-        })
-        return;
-      }else{
-        const salt = await bcrypt.genSalt(10);
-        const passwordHash = await bcrypt.hash(fieldsToUpdate.password, salt);
-
-        fieldsToUpdate.password = passwordHash;
-      }
-    }
-
-    
-    Object.entries(fieldsToUpdate).forEach(([key, value]) => {
-      if (value !== undefined) {
-        user[key] = value;
-      }
-    });
+    const data = pick(req.body, ['name', 'email', 'password', 'confirmPassword', 'isArtisan', 'phone']);
+    data['image'] = req.files.image;
 
     try {
-      const updatedUser = await User.findOneAndUpdate(
-        {_id: user.id},
-        {$set: user},
-        {new: true}
-      );
-      return res.status(200).json({
-        message:'Usuário atualizado com sucesso',
-        user: updatedUser
-      })
+      const updatedUser = await UserService.updateOneUser(token, data)
+      return res.status(200).json(updatedUser);
     } catch (error) {
-      return res.status(500).json({
-        message: error
-      })
-
-     
+      return res.status(500).json({ 
+        message: 'Erro ao atualizar usuário', 
+        error: error.message 
+      });
     }
+    
+    
   }
 }
 

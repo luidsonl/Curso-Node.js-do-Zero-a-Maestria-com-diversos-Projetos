@@ -18,10 +18,9 @@ const User = conn.model(
                 type: String,
                 required: true
             },
-            image:{
+            profilePicture:{
                 type: Schema.Types.ObjectId,
-                ref: 'Media',
-                required: true,
+                ref: 'Media'
             },
             isArtisan:{
                 type: Boolean,
