@@ -13,7 +13,7 @@ const Media = conn.model(
             type: Schema.Types.ObjectId,
             ref: 'User'
         },
-        extension:{
+        mimetype:{
             type: String,
             required: true
         },

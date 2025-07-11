@@ -27,7 +27,7 @@ class MediaController{
             let medias = [];
             
             for (const key in files) {
-                const media = await MediaService.create(files[key]);
+                const media = await MediaService.create(files[key], currentUser);
                 medias.push(media);
             }
             
