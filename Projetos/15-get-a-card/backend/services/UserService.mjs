@@ -10,7 +10,7 @@ import MediaService from './MediaService.mjs';
 class UserService{
     static async createUser(data){
 
-        const { name, email, password, confirmPassword, isArtisan, phone } = data;
+        const { name, email, password, confirmPassword, phone } = data;
 
 
         const requiredFields = {
@@ -118,7 +118,7 @@ class UserService{
        
         if (!userToUpdate) {
             const error = new Error('Acesso negado');
-            error.code = 404;
+            error.httpCode = 404;
             throw error;
         }
 
@@ -127,7 +127,7 @@ class UserService{
 
             if (userToUpdate.email !== email && emailInUse) {
             const error = new Error('Email indisponível');
-            error.code = 409;
+            error.httpCode = 409;
             throw error;
             }
         }
@@ -135,7 +135,7 @@ class UserService{
         if (password !== undefined) {
             if (password !== confirmPassword) {
             const error = new Error('As senhas não conferem');
-            error.code = 400;
+            error.httpCode = 400;
             throw error;
             } else {
             const salt = await bcrypt.genSalt(10);
@@ -155,7 +155,10 @@ class UserService{
 
         
         if(image){
-            const profilePicture = await MediaService.create(image, userToUpdate);
+            const profilePicture = await MediaService.create(image, userToUpdate, 'profiles');
+            if(userToUpdate.profilePicture){
+                await MediaService.deleteById(userToUpdate.profilePicture);
+            }
             userToUpdate.profilePicture = profilePicture;
         }
 

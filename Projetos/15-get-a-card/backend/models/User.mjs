@@ -11,6 +11,11 @@ const User = conn.model(
                 enum: ['active', 'inactive', 'pending', 'banned'],
                 default: 'pending'
             },
+            role:{
+                type: String,
+                enum: ['regular', 'super'],
+                default: 'regular'
+            },
             name:{
                 type: String,
                 required: true
@@ -32,7 +37,10 @@ const User = conn.model(
                 default: 0
             },
             phone:{
-                type: String
+                type: String,
+                validate:{
+                    validator : Number.isInteger
+                }
             }
         },{
             timestamps: true

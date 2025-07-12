@@ -110,7 +110,7 @@ class UserController {
       const updatedUser = await UserService.updateOneUser(token, data)
       return res.status(200).json(updatedUser);
     } catch (error) {
-      return res.status(error.code?? 500).json({ 
+      return res.status(error.httpCode ?? 500).json({ 
         message: 'Erro ao atualizar usuário', 
         error: error.message 
       });

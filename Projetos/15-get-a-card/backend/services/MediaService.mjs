@@ -4,19 +4,6 @@ import Media from '../models/Media.mjs'
 
 class MediaService {
 
-  /**
-  * Cria um upload de arquivo
-  * @param {Object} file - Objeto do arquivo a ser enviado
-  * @param {string} file.name - Nome do arquivo
-  * @param {number} file.size - Tamanho do arquivo em bytes
-  * @param {string} file.mimetype - Tipo MIME do arquivo
-  * @param {Function} file.mv - Função para mover o arquivo
-  * @param {Object} user - Objeto do usuário
-  * @param {string} [subdir=''] - Subdiretório para salvar o arquivo (opcional)
-  * @param {string[]} [allowedMimetypes=[]] - Array de tipos MIME permitidos (opcional)
-  * @returns {Promise<void>}
-  * @throws {Error} Quando não há arquivo, formato não aceito ou erro no upload
-  */
   static async create(file, user, subdir = '', allowedMimetypes = []) {
     if (!file) {
       throw new Error('Sem arquivo');
@@ -25,16 +12,24 @@ class MediaService {
     
     const name = file.name;
     const size = file.size;
-    const filePath = path.join('public/uploads', subdir, Date.now() + path.extname(file.name))
+    const uploadDir = path.join('public/uploads', subdir)
+    const filePath = path.join(uploadDir, Date.now() + path.extname(file.name))
     const mimetype = file.mimetype;
 
     if(allowedMimetypes.length > 0 && !allowedMimetypes.includes(mimetype)){
       throw new Error('Formato de arquivo não aceito')
     }
+
+    try {
+      await fs.promises.mkdir(uploadDir, { recursive: true });
+    } catch (err) {
+      console.log(err);
+      throw new Error('Erro ao criar diretório de upload');
+    }
     
     file.mv(filePath, function(err) {
       if (err){
-        throw new Error('Erro no upload')
+        throw new Error(`Erro no upload: ${err}`)
       }
     })
 
@@ -52,9 +47,33 @@ class MediaService {
     return newMedia;
   }
 
-  static async delete(media) {
-    
+  static async deleteById(id){
+    const media = await Media.findByIdAndDelete(id);
+
+    return media;
   }
+
+  static async delete(media) {
+    if (!media || !media.filePath) {
+      throw new Error('Mídia inválida ou caminho do arquivo não informado');
+    }
+
+    try {
+      await fs.promises.unlink(media.filePath);
+    } catch (err) {
+
+      if (err.code !== 'ENOENT') {
+        throw new Error('Erro ao excluir o arquivo físico');
+      }
+    }
+
+    try {
+      await Media.deleteOne({ _id: media._id });
+    } catch (err) {
+      throw new Error('Erro ao excluir o registro da mídia no banco de dados');
+    }
+  }
+
 }
 
 export default MediaService
