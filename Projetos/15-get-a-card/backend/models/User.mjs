@@ -34,13 +34,13 @@ const User = conn.model(
             },
             alchemy:{
                 type: Number,
-                default: 0
-            },
-            phone:{
-                type: String,
+                default: 0,
                 validate:{
                     validator : Number.isInteger
                 }
+            },
+            phone:{
+                type: String
             }
         },{
             timestamps: true
