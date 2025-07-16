@@ -14,14 +14,18 @@ const Card = conn.model(
                 type: String,
             },
             price:{
-                type: Number,
-                required: true
+                type: Number
             },
             featured_image:{
-                type: String
+                type: Schema.Types.ObjectId,
+                ref: 'Media',
+                required: true
             },
             gallery:{
-                type: [{ type: String }]
+                type: [{ 
+                    type: Schema.Types.ObjectId,
+                    ref: 'Media'
+                 }]
             },
             tags:{
                 type: [{ type: String }]
@@ -30,16 +34,16 @@ const Card = conn.model(
                 type: Boolean,
                 required: true,
             },
-            artisan: {
-                type: Schema.Types.ObjectId,
-                ref: 'User',
-                required: true,
-            },
             owner:{
                 type: Schema.Types.ObjectId,
                 ref: 'User',
                 required: true,
-            }
+            },
+            alchemist:{
+                type: Schema.Types.ObjectId,
+                ref: 'User',
+                required: true,
+            },
         },{
             timestamps: true
         }

@@ -23,7 +23,7 @@ class UserController {
       })
       
     } catch (error) {
-      res.status(500).json({ 
+      res.status(error.httpCode ?? 500).json({ 
         message: 'Erro ao registrar usuário', 
         error: error.message 
       });
@@ -44,7 +44,7 @@ class UserController {
       })
       
     } catch (error) {
-      res.status(500).json({ 
+      res.status(error.httpCode ?? 500).json({ 
         message: 'Erro ao fazer login', 
         error: error.message 
       });
@@ -70,8 +70,7 @@ class UserController {
       return res.status(200).json(currentUser);
       
     } catch (error) {
-      console.error('Erro ao verificar usuário:', error);
-      return res.status(500).json({ 
+      return res.status(error.httpCode ?? 500).json({ 
         message: 'Erro ao verificar usuário', 
         error: error.message 
       });
@@ -91,7 +90,7 @@ class UserController {
       return res.status(200).json(user);
       
     } catch (error) {
-      return res.status(500).json({ 
+      return res.status(error.httpCode ?? 500).json({ 
         message: 'Erro ao buscar usuário', 
         error: error.message 
       });

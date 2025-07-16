@@ -52,35 +52,38 @@ class UserService{
         return userObj;
     }
 
-    static async loginUser(data){
+    static async loginUser(data) {
         const { email, password } = data;
-              
-        const requiredFields = {
-            email: email,
-            password: password
-        };
         
-        for (const [field, value] of Object.entries(requiredFields)){
-            if(!FieldValidator.requiredField(value)){
-                throw new Error(`Campo ${field} é obrigatório`);
+        const requiredFields = { email, password };
+        
+        for (const [field, value] of Object.entries(requiredFields)) {
+            if (!FieldValidator.requiredField(value)) {
+                const error = new Error(`Campo ${field} é obrigatório`);
+                error.httpCode = 400;
+                throw error;
             }
         }
         
         const user = await User.findOne({ email });
 
         if (!user) {
-            throw new Error('Email ou senha incorretos');
+            const error = new Error('Email ou senha incorretos');
+            error.httpCode = 401;
+            throw error;
         }
         
         const passwordMatch = await bcrypt.compare(password, user.password);
 
         if (!passwordMatch) {
-            throw new Error('Email ou senha incorretos');
+            const error = new Error('Email ou senha incorretos');
+            error.httpCode = 401;
+            throw error;
         }
 
         return user;
-              
     }
+
 
     static async getUserById(id){
         const currentUser = await User.findById(id).select('-password');

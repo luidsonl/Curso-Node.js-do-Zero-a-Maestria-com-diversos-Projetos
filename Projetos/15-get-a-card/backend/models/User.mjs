@@ -6,11 +6,6 @@ const User = conn.model(
     'User',
     new Schema(
         {
-            status: {
-                type: String,
-                enum: ['active', 'inactive', 'pending', 'banned'],
-                default: 'pending'
-            },
             role:{
                 type: String,
                 enum: ['regular', 'super'],
@@ -34,7 +29,7 @@ const User = conn.model(
             },
             alchemy:{
                 type: Number,
-                default: 0,
+                default: 3,
                 validate:{
                     validator : Number.isInteger
                 }
