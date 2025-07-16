@@ -49,6 +49,7 @@ class MediaService {
 
   static async deleteById(id){
     const media = await Media.findByIdAndDelete(id);
+    await fs.promises.unlink(media.filePath);
 
     return media;
   }

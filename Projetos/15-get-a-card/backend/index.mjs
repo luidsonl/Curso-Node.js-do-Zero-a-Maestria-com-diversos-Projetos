@@ -24,6 +24,6 @@ app.use(express.static('public'))
 //routes
 app.use('/users', UserRoutes)
 app.use('/cards', CardRoutes)
-app.use('/files', MediaRoutes)
+//app.use('/files', MediaRoutes)
 
 app.listen(PORT)
