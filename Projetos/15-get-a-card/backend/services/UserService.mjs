@@ -158,7 +158,7 @@ class UserService{
 
         
         if(image){
-            const profilePicture = await MediaService.create(image, userToUpdate, 'profiles');
+            const profilePicture = await MediaService.create(image, userToUpdate, 'profiles', ['image/jpeg', 'image/png', 'image/gif', 'image/webp']);
             if(userToUpdate.profilePicture){
                 await MediaService.deleteById(userToUpdate.profilePicture);
             }

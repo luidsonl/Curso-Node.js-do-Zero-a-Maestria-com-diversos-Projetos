@@ -7,9 +7,8 @@ import FieldValidator from "../helpers/FieldValidator.mjs";
 
 class CardService{
     static async createCard(data, token){
-        const user = await UserService.getUserByToken(token);
 
-        console.log(data);
+        const user = await UserService.getUserByToken(token);
 
         const { title, description, price, featuredImage, gallery, tags } = data;
 
@@ -35,16 +34,15 @@ class CardService{
             throw error;
         }
 
-       console.log('aqui')
-        const featuredImageObj = await MediaService.create(featuredImage, user, 'cards');
+        const featuredImageObj = await MediaService.create(featuredImage, user, 'cards', ['image/jpeg', 'image/png', 'image/gif', 'image/webp']);
         
         const galleryObj = [];
 
-        if(gallery){
-            gallery.forEach(async image => {
-                const imageObj = await MediaService.create(Media, user, 'cards');
+        if (gallery) {
+            for (const image of gallery) {
+                const imageObj = await MediaService.create(image, user, 'cards', ['image/jpeg', 'image/png', 'image/gif', 'image/webp']);
                 galleryObj.push(imageObj);
-            });
+            }
         }
 
         const card = new Card({
