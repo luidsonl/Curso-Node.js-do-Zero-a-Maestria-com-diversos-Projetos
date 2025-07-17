@@ -114,8 +114,6 @@ class UserController {
         error: error.message 
       });
     }
-    
-    
   }
 }
 

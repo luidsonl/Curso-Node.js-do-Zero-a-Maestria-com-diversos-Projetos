@@ -16,7 +16,7 @@ const Card = conn.model(
             price:{
                 type: Number
             },
-            featured_image:{
+            featuredImage:{
                 type: Schema.Types.ObjectId,
                 ref: 'Media',
                 required: true

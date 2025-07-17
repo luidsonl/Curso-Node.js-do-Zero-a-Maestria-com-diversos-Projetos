@@ -23,7 +23,6 @@ class MediaService {
     try {
       await fs.promises.mkdir(uploadDir, { recursive: true });
     } catch (err) {
-      console.log(err);
       throw new Error('Erro ao criar diretório de upload');
     }
     
