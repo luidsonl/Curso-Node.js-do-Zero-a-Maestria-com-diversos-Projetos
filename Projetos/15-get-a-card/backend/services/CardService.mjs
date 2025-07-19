@@ -76,6 +76,42 @@ class CardService{
 
         return cards;
     }
+
+    static async deleteCardById(token, id){
+
+        if(!id){
+            const error = new Error('Campo id é obrigatório');
+            error.httpCode = 404;
+            throw error;
+        }
+
+        const card = await this.getCardById(id);
+        if(!card){
+            const error = new Error('Card não encontrado');
+            error.httpCode = 404;
+            throw error;
+        }
+        const user = await UserService.getUserByToken(token);
+        
+        if(!card.owner.equals(user._id)){
+            const error = new Error('Usuário não é dono do card')
+            error.httpCode = 403;
+
+            throw error;
+        }
+
+        await MediaService.deleteById(card.featuredImage.toString());
+        
+        if (card.gallery.length > 0){
+            for(const mediaId of card.gallery){
+                await MediaService.deleteById(mediaId.toString());
+            }
+        }
+
+        const delectedCard = await Card.findByIdAndDelete(id);
+
+        return delectedCard;
+    }
 }
 
 

@@ -10,8 +10,7 @@ const CardRoutes = express.Router();
 CardRoutes.post('/create', verifyTokenMiddleware, CardController.create);
 CardRoutes.get('/:id', CardController.getById);
 CardRoutes.get('/user/:userId', CardController.getByUserId);
-CardRoutes.patch('/transfer', CardController.transfer);
-CardRoutes.delete('/delete', CardController.delete);
+CardRoutes.delete('/:id', CardController.delete);
 
 
 export default CardRoutes

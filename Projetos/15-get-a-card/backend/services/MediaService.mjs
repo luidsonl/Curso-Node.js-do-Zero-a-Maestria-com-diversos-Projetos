@@ -46,14 +46,15 @@ class MediaService {
     return newMedia;
   }
 
-  static async deleteById(id){
-    const media = await Media.findByIdAndDelete(id);
-    await fs.promises.unlink(media.filePath);
+  static async getById(id){
+    const media = await Media.findById(id);
 
     return media;
   }
 
-  static async delete(media) {
+  static async deleteById(id){
+    const media = await this.getById(id);
+
     if (!media || !media.filePath) {
       throw new Error('Mídia inválida ou caminho do arquivo não informado');
     }
@@ -68,7 +69,33 @@ class MediaService {
     }
 
     try {
-      await Media.deleteOne({ _id: media._id });
+      const delectedMedia = await Media.findByIdAndDelete( media._id );
+      return delectedMedia;
+
+    } catch (err) {
+      throw new Error('Erro ao excluir o registro da mídia no banco de dados');
+    }
+  }
+
+  static async delete(media) {
+
+    if (!media || !media.filePath) {
+      throw new Error('Mídia inválida ou caminho do arquivo não informado');
+    }
+
+    try {
+      await fs.promises.unlink(media.filePath);
+    } catch (err) {
+
+      if (err.code !== 'ENOENT') {
+        throw new Error('Erro ao excluir o arquivo físico');
+      }
+    }
+
+    try {
+      const delectedMedia = await Media.findByIdAndDelete( media._id );
+      return delectedMedia;
+
     } catch (err) {
       throw new Error('Erro ao excluir o registro da mídia no banco de dados');
     }

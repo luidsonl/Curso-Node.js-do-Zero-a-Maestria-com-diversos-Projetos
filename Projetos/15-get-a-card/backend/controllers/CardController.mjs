@@ -5,12 +5,14 @@ import getToken from "../helpers/getToken.mjs";
 
 class CardController{
     static async create(req, res){
-        const data = pick(req.body, ['name', 'description', 'price', 'tags']);
-        data['featuredImage'] = req.files.featuredImage;
-        data['gallery'] = req.files.gallery;
-
-        const token = await getToken(req);
+        
         try {
+            const data = pick(req.body, ['name', 'description', 'price', 'tags']);
+            data['featuredImage'] = req.files.featuredImage;
+            data['gallery'] = req.files.gallery;
+
+            const token = await getToken(req);
+
             const card = await CardService.createCard(data, token);
             return res.status(200).json(card);
         } catch (error) {
@@ -53,22 +55,32 @@ class CardController{
             return res.status(200).json(cards);
 
         } catch (error) {
-             return res.status(error.httpCode ?? 500).json({ 
+            return res.status(error.httpCode ?? 500).json({ 
                 message: 'Erro ao buscar card', 
                 error: error.message 
             });
         }
     }
 
-    static async update(req, res){
-        res.json({message: 'lero lero lero lero lero'})
-    }
-    static async transfer(req, res){
-        res.json({message: 'lero lero lero lero lero'})
-    }
-
     static async delete(req, res){
-        res.json({message: 'lero lero lero lero lero'})
+        try {
+            const token = await getToken(req);
+            const id = req.params.id;
+
+            const delectedCard = await CardService.deleteCardById(token, id);
+
+            if (!delectedCard) {
+                return res.status(404).json({ message: 'Card não encontrado' });
+            }
+
+            return res.status(200).json(delectedCard);
+
+        } catch (error) {
+            return res.status(error.httpCode ?? 500).json({ 
+                message: 'Erro ao deletar card', 
+                error: error.message 
+            });
+        }
     }
 }
 
