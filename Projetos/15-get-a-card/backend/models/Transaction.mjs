@@ -2,8 +2,8 @@ import conn from '../db/conn.mjs'
 
 const {Schema} = conn
 
-const Order = conn.model(
-    'Order',
+const Transaction = conn.model(
+    'Transaction',
     new Schema(
         {
             card: {
@@ -27,4 +27,4 @@ const Order = conn.model(
     )
 )
 
-export default Order
+export default Transaction

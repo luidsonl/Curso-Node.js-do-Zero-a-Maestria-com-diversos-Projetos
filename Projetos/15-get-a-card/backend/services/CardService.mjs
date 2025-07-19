@@ -10,10 +10,10 @@ class CardService{
 
         const user = await UserService.getUserByToken(token);
 
-        const { title, description, price, featuredImage, gallery, tags } = data;
+        const { name, description, price, featuredImage, gallery, tags } = data;
 
         const requiredFields = {
-            title: title,
+            name: name,
             description: description,
             featuredImage: featuredImage
         };
@@ -46,7 +46,7 @@ class CardService{
         }
 
         const card = new Card({
-            title: title,
+            name: name,
             alchemist: user._id,
             available: false,
             owner: user._id,
@@ -61,6 +61,20 @@ class CardService{
         const newCard = await card.save();
 
         return newCard;
+    }
+
+    static async getCardById(id){
+        const card = await Card.findById(id);
+
+        return card;
+    }
+
+    static async getCardByUserId(userId){
+        const cards = await Card.find({
+            owner: userId
+        })
+
+        return cards;
     }
 }
 

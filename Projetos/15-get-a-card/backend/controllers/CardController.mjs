@@ -5,7 +5,7 @@ import getToken from "../helpers/getToken.mjs";
 
 class CardController{
     static async create(req, res){
-        const data = pick(req.body, ['title', 'description', 'price', 'tags']);
+        const data = pick(req.body, ['name', 'description', 'price', 'tags']);
         data['featuredImage'] = req.files.featuredImage;
         data['gallery'] = req.files.gallery;
 
@@ -23,15 +23,41 @@ class CardController{
 
     static async getById(req, res){
         try {
-            const { title, description, price, featured_image, gallery, phone } = req.body;
+            const id = req.params.id;
 
+            const card = await CardService.getCardById(id)
+
+            if (!card) {
+                return res.status(404).json({ message: 'Card não encontrado' });
+            }
+            
+            return res.status(200).json(card);
 
         } catch (error) {
-            
+             return res.status(error.httpCode ?? 500).json({ 
+                message: 'Erro ao buscar card', 
+                error: error.message 
+            });
         }
     }
     static async getByUserId(req, res){
-        res.json({message: 'ZAWARUDO'})
+        try {
+            const userId = req.params.userId;
+
+            const cards = await CardService.getCardByUserId(userId);
+
+            if (!cards) {
+                return res.status(404).json({ message: 'Card não encontrado' });
+            }
+            
+            return res.status(200).json(cards);
+
+        } catch (error) {
+             return res.status(error.httpCode ?? 500).json({ 
+                message: 'Erro ao buscar card', 
+                error: error.message 
+            });
+        }
     }
 
     static async update(req, res){

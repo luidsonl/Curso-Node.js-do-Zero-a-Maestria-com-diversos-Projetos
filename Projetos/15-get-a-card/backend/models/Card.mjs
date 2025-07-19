@@ -6,7 +6,7 @@ const Card = conn.model(
     'Card',
     new Schema(
         {
-            title:{
+            name:{
                 type: String,
                 required: true
             },
