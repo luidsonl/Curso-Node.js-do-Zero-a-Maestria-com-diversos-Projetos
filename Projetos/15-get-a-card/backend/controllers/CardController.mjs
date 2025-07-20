@@ -1,6 +1,7 @@
 import pick from "../helpers/pick.mjs";
 import CardService from "../services/CardService.mjs";
 import getToken from "../helpers/getToken.mjs";
+import validateObjectId from "../helpers/validateObjectId.mjs";
 
 
 class CardController{
@@ -8,8 +9,12 @@ class CardController{
         
         try {
             const data = pick(req.body, ['name', 'description', 'price', 'tags']);
-            data['featuredImage'] = req.files.featuredImage;
-            data['gallery'] = req.files.gallery;
+
+            if(req.files){
+                data['featuredImage'] = req.files.featuredImage;
+                data['gallery'] = req.files.gallery;
+            }
+            
 
             const token = await getToken(req);
 
@@ -26,6 +31,9 @@ class CardController{
     static async getById(req, res){
         try {
             const id = req.params.id;
+            if(!validateObjectId(id)){
+                return res.status(404).json({ message: 'Card não encontrado' });
+            }
 
             const card = await CardService.getCardById(id)
 
@@ -73,7 +81,10 @@ class CardController{
                 return res.status(404).json({ message: 'Card não encontrado' });
             }
 
-            return res.status(200).json(delectedCard);
+            return res.status(200).json({
+                message: 'Card deletado com sucesso',
+                card: delectedCard
+            });
 
         } catch (error) {
             return res.status(error.httpCode ?? 500).json({ 

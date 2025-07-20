@@ -6,6 +6,7 @@ import UserService from '../services/UserService.mjs';
 import AuthService from '../services/AuthService.mjs';
 import MediaService from '../services/MediaService.mjs';
 import pick from '../helpers/pick.mjs';
+import validateObjectId from '../helpers/validateObjectId.mjs';
 
 class UserController {
 
@@ -80,6 +81,10 @@ class UserController {
   static async getById(req, res) {
     try {
       const id = req.params.id;
+
+      if(!validateObjectId(id)){
+        return res.status(404).json({ message: 'Usuário não encontrado' });
+      }
       
       const user = await UserService.getUserById(id);
       
@@ -103,7 +108,9 @@ class UserController {
 
 
     const data = pick(req.body, ['name', 'email', 'password', 'confirmPassword', 'phone']);
-    data['image'] = req.files.image;
+    if(req.files){
+      data['image'] = req.files.image;
+    }
 
     try {
       const updatedUser = await UserService.updateOneUser(token, data)

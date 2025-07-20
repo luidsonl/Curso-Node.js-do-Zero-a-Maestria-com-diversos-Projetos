@@ -92,8 +92,9 @@ class CardService{
             throw error;
         }
         const user = await UserService.getUserByToken(token);
+
         
-        if(!card.owner.equals(user._id)){
+        if(!user || !card.owner.equals(user._id)){
             const error = new Error('Usuário não é dono do card')
             error.httpCode = 403;
 
