@@ -103,16 +103,14 @@ class UserController {
   }
 
   static async update(req, res){
-
-    const token = await getToken(req);
-
-
-    const data = pick(req.body, ['name', 'email', 'password', 'confirmPassword', 'phone']);
-    if(req.files){
-      data['image'] = req.files.image;
-    }
-
+    
     try {
+      const token = await getToken(req);
+      const data = pick(req.body, ['name', 'email', 'password', 'confirmPassword', 'phone']);
+      if (req.files){
+        data['image'] = req.files.image;
+      }
+      
       const updatedUser = await UserService.updateOneUser(token, data)
       return res.status(200).json(updatedUser);
     } catch (error) {

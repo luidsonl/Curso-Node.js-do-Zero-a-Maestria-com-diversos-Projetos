@@ -33,7 +33,10 @@ class UserService{
         const userFound = await User.findOne({ email });
         
         if (userFound) {
-            throw new Error('email já está em uso');
+            const error = new Error('email já está em uso')
+            error.httpCode = 403;
+
+            throw error;
         }
         
         const salt = await bcrypt.genSalt(10);

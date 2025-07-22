@@ -10,7 +10,13 @@ class CardService{
 
         const user = await UserService.getUserByToken(token);
 
-        const { name, description, price, featuredImage, gallery, tags } = data;
+        if(!user){
+            const error = new Error('Usuário não encontrado');
+            error.httpCode = 404;
+            throw error;
+        }
+
+        const { name, description, featuredImage, gallery, tags } = data;
 
         const requiredFields = {
             name: name,
@@ -41,7 +47,7 @@ class CardService{
         if (gallery) {
             for (const image of gallery) {
                 const imageObj = await MediaService.create(image, user, 'cards', ['image/jpeg', 'image/png', 'image/gif', 'image/webp']);
-                galleryObj.push(imageObj);
+                galleryObj.push(imageObj._id);
             }
         }
 
@@ -51,8 +57,7 @@ class CardService{
             available: false,
             owner: user._id,
             description: description,
-            price: price,
-            featuredImage: featuredImageObj,
+            featuredImage: featuredImageObj._id,
             gallery: galleryObj,
             tags: tags
         })
