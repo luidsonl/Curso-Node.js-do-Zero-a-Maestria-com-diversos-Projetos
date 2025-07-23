@@ -74,6 +74,12 @@ class CardService{
         return card;
     }
 
+    static async getCardsByPage(page = 1, offset = 10) {
+        const skip = (page - 1) * offset;
+        const cards = await Card.find().skip(skip).limit(offset);
+        return cards;
+    }
+
     static async getCardByUserId(userId){
         const cards = await Card.find({
             owner: userId

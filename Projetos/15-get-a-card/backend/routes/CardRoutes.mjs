@@ -11,6 +11,7 @@ CardRoutes.post('/create', verifyTokenMiddleware, CardController.create);
 CardRoutes.get('/:id', CardController.getById);
 CardRoutes.get('/user/:userId', CardController.getByUserId);
 CardRoutes.delete('/:id', CardController.delete);
+CardRoutes.get('/', CardController.getByPage);
 
 
 export default CardRoutes

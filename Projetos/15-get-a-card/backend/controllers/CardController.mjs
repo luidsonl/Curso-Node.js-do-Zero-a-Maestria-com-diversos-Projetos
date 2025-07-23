@@ -28,6 +28,20 @@ class CardController{
         }
     }
 
+    static async getByPage(req, res){
+        try {
+            const page = req.query.page || 1;
+            const cards = await CardService.getCardsByPage(page)
+
+            return res.status(200).json(cards);
+        } catch (error) {
+            return res.status(error.httpCode ?? 500).json({ 
+                message: 'Erro ao buscar cards', 
+                error: error.message 
+            });
+        }
+    }
+
     static async getById(req, res){
         try {
             const id = req.params.id;
