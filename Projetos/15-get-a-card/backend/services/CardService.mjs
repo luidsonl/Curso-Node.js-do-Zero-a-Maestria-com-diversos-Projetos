@@ -68,25 +68,44 @@ class CardService{
         return newCard;
     }
 
-    static async getCardById(id){
-        const card = await Card.findById(id);
+    static async getCardById(id, populateRefs = true) {
+        let query = Card.findById(id);
+
+        if (populateRefs) {
+            query = query.populate('featuredImage').populate('gallery');
+        }
+
+        const card = await query.exec();
 
         return card;
     }
 
-    static async getCardsByPage(page = 1, offset = 10) {
+
+    static async getCardsByPage(page = 1, offset = 10, populateRefs = true) {
         const skip = (page - 1) * offset;
-        const cards = await Card.find().skip(skip).limit(offset);
+        let query = Card.find().skip(skip).limit(offset);
+
+        if (populateRefs) {
+            query = query.populate('featuredImage').populate('gallery');
+        }
+
+        const cards = await query.exec();
         return cards;
     }
 
-    static async getCardByUserId(userId){
-        const cards = await Card.find({
+    static async getCardByUserId(userId, populateRefs = true) {
+        let query = Card.find({
             owner: userId
-        })
+        });
 
+        if (populateRefs) {
+            query = query.populate('featuredImage').populate('gallery');
+        }
+
+        const cards = await query.exec();
         return cards;
     }
+
 
     static async deleteCardById(token, id){
 
@@ -96,7 +115,7 @@ class CardService{
             throw error;
         }
 
-        const card = await this.getCardById(id);
+        const card = await this.getCardById(id, false);
         if(!card){
             const error = new Error('Card não encontrado');
             error.httpCode = 404;
