@@ -1,7 +1,6 @@
 import FieldValidator from '../helpers/FieldValidator.mjs';
 import User from '../models/User.mjs';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import AuthService from './AuthService.mjs';
 import pick from '../helpers/pick.mjs';
 import MediaService from './MediaService.mjs';

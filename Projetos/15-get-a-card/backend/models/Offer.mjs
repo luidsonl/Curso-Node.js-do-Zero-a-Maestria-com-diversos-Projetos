@@ -2,8 +2,8 @@ import conn from '../db/conn.mjs'
 
 const {Schema} = conn
 
-const Transaction = conn.model(
-    'Transaction',
+const Offer = conn.model(
+    'Offer',
     new Schema(
         {
             status: {
@@ -17,12 +17,13 @@ const Transaction = conn.model(
                 ref: 'Card',
                 required: true,
             },
-            offer: {
+            price: {
                 type: Number,
                 validate: {
                     validator: Number.isInteger,
                     message: '{VALUE} não é um número inteiro'
                 },
+                required: true,
                 min: 0
             },
             due:{
@@ -43,4 +44,4 @@ const Transaction = conn.model(
     )
 )
 
-export default Transaction
+export default Offer
