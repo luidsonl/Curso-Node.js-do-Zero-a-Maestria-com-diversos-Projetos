@@ -54,7 +54,7 @@ class CardService{
         const card = new Card({
             name: name,
             alchemist: user._id,
-            available: false,
+            available: true,
             owner: user._id,
             description: description,
             featuredImage: featuredImageObj._id,

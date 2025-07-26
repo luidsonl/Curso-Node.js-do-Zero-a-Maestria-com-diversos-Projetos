@@ -6,15 +6,15 @@ class OfferService{
     static async create(data, token){
         const seller = await UserService.getUserByToken(token);
 
-        const { card_id, price, due } = data;
+        const { cardId, price, due } = data;
 
-        if(!card_id){
+        if(!cardId){
             const error = new Error('Sem card atribuido');
             error.httpCode = 403;
             throw error;
         }
 
-        const card = await CardService.getCardById(card_id);
+        const card = await CardService.getCardById(cardId);
 
         if(!card){
             const error = new Error('Card inválido');
@@ -34,7 +34,7 @@ class OfferService{
             throw error;
         }
 
-        const Offer = new Offer({
+        const offer = new Offer({
             seller: seller._id,
             card: card._id,
             price: price,
@@ -42,7 +42,7 @@ class OfferService{
             status: 'open'
         })
 
-        const createdOffer = await Offer.save()
+        const createdOffer = await offer.save()
 
         card.available = false;
         await card.save()

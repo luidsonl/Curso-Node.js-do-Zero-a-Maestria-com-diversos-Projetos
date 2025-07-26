@@ -5,6 +5,7 @@ import CardRoutes from './routes/CardRoutes.mjs'
 import fileUpload from 'express-fileupload';
 import dotenv from 'dotenv';
 import MediaRoutes from './routes/MediaRountes.mjs';
+import OfferRoutes from './routes/OfferRoutes.mjs';
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ app.use(express.static('public'))
 //routes
 app.use('/users', UserRoutes)
 app.use('/cards', CardRoutes)
+app.use('/offers', OfferRoutes)
 //app.use('/files', MediaRoutes)
 
 app.listen(PORT)
