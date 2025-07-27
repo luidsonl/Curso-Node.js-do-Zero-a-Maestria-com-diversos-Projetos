@@ -4,7 +4,7 @@ import verifyTokenMiddleware from '../middlewares/verifyTokenMiddleware.mjs';
 
 const OfferRoutes = express.Router();
 
-OfferRoutes.get('/', OfferController.getAll);
+OfferRoutes.get('/', OfferController.getOpenbyPage);
 OfferRoutes.post('/', verifyTokenMiddleware, OfferController.create)
 OfferRoutes.post('/cancel/:id', verifyTokenMiddleware, OfferController.cancel)
 OfferRoutes.get('/:id', OfferController.getById);

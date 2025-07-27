@@ -9,14 +9,25 @@ class OfferController{
         })
     }
 
+    static async getOpenbyPage(req, res){
+        try {
+            const page = req.query.page || 1;
+            const offers = await OfferService.getOpenbyPage(page);
+
+            return res.status(200).json(offers);
+        } catch (error) {
+            
+        }
+    }
+
     static async getById(req, res){
-        res.status(200).json({
+        return res.status(200).json({
             message: 'What went wrong with your head?'
         })
     }
 
     static async getByUserId(req, res){
-        res.status(200).json({
+        return res.status(200).json({
             message: 'Oh mr crlowley'
         })
     }

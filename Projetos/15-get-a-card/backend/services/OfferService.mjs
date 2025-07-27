@@ -50,6 +50,19 @@ class OfferService{
         return createdOffer;
     }
 
+    static async getOpenbyPage(page = 1, offset = 10, populateRefs = true){
+        const skip = (page - 1) * offset;
+        let query = Offer.find({"status": "open"}).skip(skip).limit(offset);
+
+        if (populateRefs) {
+            query = query.populate('card').populate('seller');
+        }
+        
+        const offers = await query.exec();
+        return offers;
+
+    }
+
     static async cancel(orderId, token){
         const offer = await Offer.findById(orderId).populate('card');
         const user = await UserService.getUserByToken(token);
@@ -66,6 +79,13 @@ class OfferService{
         if(!user || !offer.seller.equals(user._id)){
             const error = new Error('Usuário não é dono da oferta');
             error.httpCode = 403;
+
+            throw error;
+        }
+
+        if(offer.status == 'canceled'){
+            const error = new Error('Oferta já foi cancelada');
+            error.httpCode = 409;
 
             throw error;
         }
