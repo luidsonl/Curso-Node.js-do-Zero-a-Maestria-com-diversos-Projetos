@@ -21,7 +21,7 @@ class OfferController{
             const id = req.params.id;
 
             if(!validateObjectId(id)){
-                return res.status(404).json({ message: 'Card não encontrado' });
+                return res.status(404).json({ message: 'Oferta não encontrada' });
             }
 
             const offer = await OfferService.getById(id)
@@ -84,6 +84,11 @@ class OfferController{
         try {
             const token = await getToken(req);
             const id = req.params.id;
+
+            if(!validateObjectId(id)){
+                return res.status(404).json({ message: 'Oferta não encontrada' });
+            }
+
             const offer = await OfferService.cancel(id, token);
 
             return res.status(200).json(offer);
@@ -95,6 +100,27 @@ class OfferController{
             });
         }
         
+    }
+
+    static async execute(req, res){
+        try {
+            const token = await getToken(req);
+            const orderId = req.params.id;
+
+            if(!validateObjectId(orderId)){
+                return res.status(404).json({ message: 'Oferta não encontrada' });
+            }
+
+            const offer = await OfferService.execute(orderId, token);
+
+            return res.status(200).json(offer);
+
+        } catch (error) {
+            return res.status(error.httpCode ?? 500).json({ 
+                message: 'Erro ao executar compra', 
+                error: error.message 
+            });
+        }
     }
 
 

@@ -106,6 +106,77 @@ class OfferService{
         return offer;
     }
 
+    static async execute(orderId, token){
+        const offer = await Offer.findById(orderId).populate('card').populate('seller');
+
+        if(!offer){
+            const error = new Error('Oferta não encontrada');
+            error.httpCode = 404;
+
+            throw error;
+        }
+
+        const card = offer.card;
+        const price = offer.price;
+        const buyer = await UserService.getUserByToken(token);
+        const seller = offer.seller;
+        const due = offer.due;
+
+        if(offer.status != 'open'){
+            const error = new Error('Oferta já foi encerrada');
+            error.httpCode = 409;
+
+            throw error;
+        }
+
+        if(due){
+            const dueDate = new Date(due);
+            if (dueDate < new Date()) {
+                const error = new Error('Oferta expirou');
+                error.httpCode = 403;
+
+                throw error;
+            }
+        }
+
+        if(!buyer){
+            const error = new Error('Usuário não encontrado');
+            error.httpCode = 404;
+
+            throw error;
+        }
+
+        if(offer.seller._id.equals(buyer._id)){
+            const error = new Error('Usuário é o dono da oferta');
+            error.httpCode = 403;
+
+            throw error;
+        }
+
+        if(price > buyer.alchemy){
+            const error = new Error('Alquimia insuficiente');
+            error.httpCode = 403;
+
+            throw error;
+        }
+
+
+        buyer.alchemy = buyer.alchemy - price;
+        seller.alchemy = seller.alchemy + price;
+        offer.buyer = buyer._id;
+        offer.status = 'executed';
+        card.available = true;
+        card.owner = buyer._id;
+
+        await offer.save();
+        await card.save()
+        await buyer.save();
+        await seller.save();
+
+        return offer;
+
+    }
+
     static async getByUserIdByPage(userId ,page = 1, offset = 10, populateRefs = true){
        
         const skip = (page - 1) * offset;
