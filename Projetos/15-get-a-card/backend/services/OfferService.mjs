@@ -105,6 +105,22 @@ class OfferService{
 
         return offer;
     }
+
+    static async getByUserIdByPage(userId ,page = 1, offset = 10, populateRefs = true){
+       
+        const skip = (page - 1) * offset;
+
+        let query = Offer.find({
+            seller: userId
+        }).skip(skip).limit(offset);
+
+        if (populateRefs) {
+            query = query.populate('card');
+        }
+
+        const offers = await query.exec();
+        return offers;
+    }
 }
 
 export default OfferService;

@@ -42,9 +42,25 @@ class OfferController{
     }
 
     static async getByUserId(req, res){
-        return res.status(200).json({
-            message: 'Oh mr crlowley'
-        })
+
+        try {
+            const userId = req.params.userId;
+            const page = req.query.page;
+            
+            if(!validateObjectId(userId)){
+                return res.status(404).json({ message: 'Usuário não encontrado' });
+            }
+
+            const offers = await OfferService.getByUserIdByPage(userId, page);
+
+            return res.status(200).json(offers)
+        } catch (error) {
+            return res.status(error.httpCode ?? 500).json({ 
+                message: 'Erro ao buscar ofertas', 
+                error: error.message 
+            });
+        }
+        
     }
 
     static async create( req, res){
