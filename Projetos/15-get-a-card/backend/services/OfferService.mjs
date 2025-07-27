@@ -49,6 +49,35 @@ class OfferService{
         
         return createdOffer;
     }
+
+    static async cancel(orderId, token){
+        const offer = await Offer.findById(orderId).populate('card');
+        const user = await UserService.getUserByToken(token);
+
+        if(!offer){
+            const error = new Error('Oferta não encontrada');
+            error.httpCode = 404;
+
+            throw error;
+        }
+
+        const card = offer.card;
+
+        if(!user || !offer.seller.equals(user._id)){
+            const error = new Error('Usuário não é dono da oferta');
+            error.httpCode = 403;
+
+            throw error;
+        }
+
+        card.available = true;
+        offer.status = 'canceled';
+
+        await card.save();
+        await offer.save()
+
+        return offer;
+    }
 }
 
 export default OfferService;

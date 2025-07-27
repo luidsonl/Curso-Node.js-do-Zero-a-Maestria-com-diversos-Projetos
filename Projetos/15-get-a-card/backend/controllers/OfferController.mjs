@@ -36,9 +36,23 @@ class OfferController{
                 error: error.message 
             });
         }
+    }
 
+    static async cancel(req, res){
+        try {
+            const token = await getToken(req);
+            const id = req.params.id;
+            const offer = await OfferService.cancel(id, token);
+
+            return res.status(200).json(offer);
+
+        } catch (error) {
+            return res.status(error.httpCode ?? 500).json({ 
+                message: 'Erro ao cancelar oferta', 
+                error: error.message 
+            });
+        }
         
-
     }
 
 
