@@ -50,6 +50,13 @@ class OfferService{
         return createdOffer;
     }
 
+    static async getById(id){
+        
+        const offer = await Offer.findById(id)
+
+        return offer;
+    }
+
     static async getOpenbyPage(page = 1, offset = 10, populateRefs = true){
         const skip = (page - 1) * offset;
         let query = Offer.find({"status": "open"}).skip(skip).limit(offset);
