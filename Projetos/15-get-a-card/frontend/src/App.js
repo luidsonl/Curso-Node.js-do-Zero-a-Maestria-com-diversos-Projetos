@@ -3,7 +3,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register.jsx';
 import Dashboard from './pages/Dashboard';
-import ProtectedRoute from './components/ProtectedRoute';
+import ProtectedRoutes from './components/ProtectedRoutes';
 import { AuthProvider } from './contexts/AuthContext.jsx';
 
 const App = () => {
@@ -16,7 +16,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
 
-          <Route element={<ProtectedRoute />}>
+          <Route element={<ProtectedRoutes />}>
             <Route path="/dashboard" element={<Dashboard />} />
           </Route>
         </Routes>

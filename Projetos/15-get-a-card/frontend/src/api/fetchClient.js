@@ -1,5 +1,3 @@
-import { useAuthContext } from "../contexts/AuthContext";
-
 const BASE_URL = process.env.REACT_APP_BASE_API_URL;
 
 export async function fetchClient(url, options = {}) {
