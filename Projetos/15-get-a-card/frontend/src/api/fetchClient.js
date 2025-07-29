@@ -1,4 +1,4 @@
-const BASE_URL = process.env.REACT_APP_BASE_API_URL + '/users';
+const BASE_URL = process.env.REACT_APP_BASE_API_URL;
 
 export async function fetchClient(url, options = {}) {
   const headers = {

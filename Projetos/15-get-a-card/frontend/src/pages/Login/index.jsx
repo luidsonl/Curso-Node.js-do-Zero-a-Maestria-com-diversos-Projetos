@@ -12,12 +12,13 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      const data = await fetchClient('/login', {
+      const data = await fetchClient('users/login', {
         method: 'POST',
         body: JSON.stringify({ email, password }),
       });
 
-      // Token já vem no cookie HttpOnly, pode usar o data.token se quiser
+      console.log(data);
+
       navigate('/dashboard');
     } catch (err) {
       setError(err.message);
