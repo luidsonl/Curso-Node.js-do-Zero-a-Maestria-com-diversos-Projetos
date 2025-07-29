@@ -1,16 +1,42 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { fetchClient } from '../api/fetchClient';
+import { useAuthContext } from '../contexts/AuthContext';
 
-export function useAuth() {
+export function useAuth({ redirectIfNotAuth = false } = {}) {
+  const { token, setToken } = useAuthContext();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  const login = (newToken) => {
+    setToken(newToken);
+  };
+
+  const logout = () => {
+    setToken(null);
+    setUser(null);
+    navigate('/login');
+  };
 
   useEffect(() => {
-    fetchClient('/check')
-      .then(data => setUser(data))
-      .catch(() => setUser(null))
-      .finally(() => setLoading(false));
-  }, []);
+    const verifyUser = async () => {
+      setLoading(true);
+      try {
+        const data = await fetchClient('users/check');
+        setUser(data);
+      } catch (error) {
+        setUser(null);
+        if (redirectIfNotAuth) {
+          navigate('/login');
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  return { user, loading };
+    verifyUser();
+  }, [token, redirectIfNotAuth, navigate]);
+
+  return { user, loading, token, login, logout };
 }
