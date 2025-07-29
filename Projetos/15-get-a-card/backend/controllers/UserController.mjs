@@ -37,6 +37,14 @@ class UserController {
       const user = await UserService.loginUser(data);
 
       const userToken = await AuthService.createUserToken(user);
+
+      res.cookie('token', userToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'lax', 
+        maxAge: 1000 * 60 * 60 * 24,
+        path: '/',
+      });
       
       res.status(200).json({
         message: 'Você está autenticado',
