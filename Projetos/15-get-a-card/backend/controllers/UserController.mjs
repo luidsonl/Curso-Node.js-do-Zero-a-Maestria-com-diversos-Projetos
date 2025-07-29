@@ -1,17 +1,13 @@
-import User from '../models/User.mjs';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import getToken from '../helpers/getToken.mjs';
 import UserService from '../services/UserService.mjs';
 import AuthService from '../services/AuthService.mjs';
-import MediaService from '../services/MediaService.mjs';
 import pick from '../helpers/pick.mjs';
 import validateObjectId from '../helpers/validateObjectId.mjs';
 
 class UserController {
 
   static async register(req, res) {
-    const data = pick(req.body, ['name', 'email', 'password', 'confirmPassword', 'image', 'phone']);
+    const data = pick(req.body, ['name', 'email', 'password', 'confirmPassword', 'phone']);
       
     try {
       const newUser = await UserService.createUser(data);
@@ -37,14 +33,6 @@ class UserController {
       const user = await UserService.loginUser(data);
 
       const userToken = await AuthService.createUserToken(user);
-
-      res.cookie('token', userToken, {
-        httpOnly: true,
-        secure: true,
-        sameSite: 'lax', 
-        maxAge: 1000 * 60 * 60 * 24,
-        path: '/',
-      });
       
       res.status(200).json({
         message: 'Você está autenticado',
