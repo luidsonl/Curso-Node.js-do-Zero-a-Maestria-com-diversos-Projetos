@@ -1,14 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fetchClient } from '../../api/fetchClient';
 import { useAuth } from '../../hooks/useAuth';
+import { useAuthContext } from '../../contexts/AuthContext';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const {token, setToken} = useAuthContext();
+  const {user, setUser} = useAuthContext()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,7 +21,13 @@ export default function Login() {
         body: JSON.stringify({ email, password }),
       });
 
-      login(data.token);
+      setToken(data.token);
+
+      const userToSet = await fetchClient(`users/${data.userId}`, {
+        method: 'GET'
+      });
+      
+      setUser(userToSet);
 
       navigate('/dashboard');
     } catch (err) {

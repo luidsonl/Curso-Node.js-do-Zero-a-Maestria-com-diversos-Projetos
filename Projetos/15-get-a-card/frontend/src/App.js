@@ -4,21 +4,25 @@ import Login from './pages/Login';
 import Register from './pages/Register.jsx';
 import Dashboard from './pages/Dashboard';
 import ProtectedRoute from './components/ProtectedRoute';
+import { AuthProvider } from './contexts/AuthContext.jsx';
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
 
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
 
-        <Route element={<ProtectedRoute />}>
-          <Route path="/dashboard" element={<Dashboard />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+          <Route element={<ProtectedRoute />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
+    
   );
 };
 

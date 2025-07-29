@@ -1,3 +1,5 @@
+import { useAuthContext } from "../contexts/AuthContext";
+
 const BASE_URL = process.env.REACT_APP_BASE_API_URL;
 
 export async function fetchClient(url, options = {}) {
@@ -13,11 +15,11 @@ export async function fetchClient(url, options = {}) {
   };
 
   const res = await fetch(`${BASE_URL}${url}`, opts);
-
+  
   if (!res.ok) {
     const errorData = await res.json().catch(() => ({}));
     throw new Error(errorData.message || 'Erro na requisição');
   }
-
+  
   return res.json();
 }

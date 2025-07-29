@@ -9,24 +9,35 @@ export function useAuth({ redirectIfNotAuth = false } = {}) {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  const login = (newToken) => {
-    setToken(newToken);
-  };
-
-  const logout = () => {
-    setToken(null);
-    setUser(null);
-    navigate('/login');
-  };
-
   useEffect(() => {
     const verifyUser = async () => {
       setLoading(true);
+      
+      if (!token) {
+        setUser(null);
+        if (redirectIfNotAuth) {
+          navigate('/login');
+        }
+        setLoading(false);
+        return;
+      }
+
       try {
-        const data = await fetchClient('users/check');
+        
+        const data = await fetchClient('users/check', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        
+        console.log('User verification successful:', data);
         setUser(data);
       } catch (error) {
+        console.error('Token verification failed:', error);
+        
+        setToken(null);
         setUser(null);
+        
         if (redirectIfNotAuth) {
           navigate('/login');
         }
@@ -36,7 +47,7 @@ export function useAuth({ redirectIfNotAuth = false } = {}) {
     };
 
     verifyUser();
-  }, [token, redirectIfNotAuth, navigate]);
+  }, [token, redirectIfNotAuth, navigate, setToken]);
 
-  return { user, loading, token, login, logout };
+  return { user, loading };
 }
