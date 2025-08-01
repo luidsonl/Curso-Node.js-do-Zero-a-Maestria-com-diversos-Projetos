@@ -7,10 +7,14 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 class AuthService{
     static async createUserToken (user){
-        const token = jwt.sign({
+        const token = jwt.sign(
+            {
             name: user.name,
-            id: user._id
-        }, JWT_SECRET)
+            id: user._id,
+            },
+            JWT_SECRET,
+            { expiresIn: '1d' }
+        );
         
         return token;
     }
