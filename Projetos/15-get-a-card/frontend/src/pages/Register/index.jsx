@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fetchClient } from '../../api/fetchClient';
 
-export default function Register() {
+function Register() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -87,3 +87,6 @@ export default function Register() {
     </form>
   );
 }
+
+
+export default Register;

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { fetchClient } from '../../api/fetchClient';
 import { useAuthContext } from '../../contexts/AuthContext';
 
-export default function Login() {
+function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -56,3 +56,5 @@ export default function Login() {
     </form>
   );
 }
+
+export default Login;

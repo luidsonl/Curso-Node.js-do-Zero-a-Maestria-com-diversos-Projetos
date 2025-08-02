@@ -1,0 +1,70 @@
+:root{
+    --color-primary: #333;
+    --color-secondary: #AAA;
+    --color-tertiary: #F33;
+
+    --breakpoint-sm-min: 576px;
+    --breakpoint-md-min: 768px;
+    --breakpoint-lg-min: 992px;
+    --breakpoint-xl-min: 1200px;
+    --breakpoint-xxl-min: 1400px;
+
+    --breakpoint-sm-max: 575.98px;
+    --breakpoint-md-max: 767.98px;
+    --breakpoint-lg-max: 991.98px;
+    --breakpoint-xl-max: 1199.98px;
+    --breakpoint-xxl-max: 1399.98px;
+}
+
+/* Reset CSS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.5;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+/* Basic */
+.jc-center{
+    display: flex;
+    justify-content: center;
+}
+.ai-center{
+    display: flex;
+    align-items: center;
+}
