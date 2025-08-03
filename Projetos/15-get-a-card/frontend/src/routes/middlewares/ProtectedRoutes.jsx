@@ -8,6 +8,9 @@ export default function ProtectedRoutes() {
   const [isValid, setIsValid] = useState(null);
   const { token } = useAuthContext();
   
+
+  useEffect(()=>{
+    
     async function check(){
       await fetchClient('users/check', {
         method: 'GET',
@@ -21,9 +24,8 @@ export default function ProtectedRoutes() {
       }).finally(()=>{
         setLoading(false);
       });
-  }
+    }
 
-  useEffect(()=>{
     check();
   },[token])
 
