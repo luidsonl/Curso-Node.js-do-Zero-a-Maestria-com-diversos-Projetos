@@ -1,6 +1,6 @@
 const BASE_URL = process.env.REACT_APP_BASE_API_URL;
 
-export async function fetchClient(url, options = {}) {
+async function fetchClient(url, options = {}) {
   const headers = {
     'Content-Type': 'application/json',
     ...(options.headers || {})
@@ -21,3 +21,5 @@ export async function fetchClient(url, options = {}) {
   
   return res.json();
 }
+
+export default fetchClient;

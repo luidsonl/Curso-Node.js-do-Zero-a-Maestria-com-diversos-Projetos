@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { fetchClient } from '../../api/fetchClient';
+import { useAuthContext } from '../../contexts/AuthContext';
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -10,24 +10,21 @@ function Register() {
     confirmPassword: '',
     phone: ''
   });
-  
+
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { register } = useAuthContext();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const data = await fetchClient('users/register', {
-        method: 'POST',
-        body: JSON.stringify(formData)
-      });
-
+      await register(formData);
       navigate('/dashboard');
     } catch (err) {
       setError(err.message);
@@ -87,6 +84,5 @@ function Register() {
     </form>
   );
 }
-
 
 export default Register;

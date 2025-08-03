@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { useEffect, useState } from 'react';
-import { fetchClient } from '../../api/fetchClient';
+import fetchClient from '../../api/fetchClient';
 
 export default function ProtectedRoutes() {
   const [loading, setLoading] = useState(true);

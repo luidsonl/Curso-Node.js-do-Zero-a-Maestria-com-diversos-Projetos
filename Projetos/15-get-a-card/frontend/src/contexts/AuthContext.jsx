@@ -18,6 +18,12 @@ export const AuthProvider = ({ children }) => {
     setUser(user);
   };
 
+  const register = async (formData) => {
+    const { token, user } = await AuthService.register(formData);
+    setToken(token);
+    setUser(user);
+  };
+
   const logout = () => {
     AuthService.logout();
     setToken(null);
@@ -25,7 +31,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ token, user, login, logout }}>
+    <AuthContext.Provider value={{ token, user, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   );
