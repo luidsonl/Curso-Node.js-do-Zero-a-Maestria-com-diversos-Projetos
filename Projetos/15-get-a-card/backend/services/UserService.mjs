@@ -28,6 +28,14 @@ class UserService{
         if(!FieldValidator.fieldsAreEqual(password, confirmPassword)){
             throw new Error('password e confirmPassword precisam ser iguais');
         }
+
+        if (phone) {
+            const digits = phone.replace(/\D/g, '');
+            if (digits.length < 8 || digits.length > 15) {
+            throw new Error('Telefone inválido: deve conter entre 8 e 15 dígitos');
+            }
+        }
+
         
         const userFound = await User.findOne({ email });
         
