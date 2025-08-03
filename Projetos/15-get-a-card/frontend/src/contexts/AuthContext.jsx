@@ -1,47 +1,40 @@
 import { createContext, useState, useContext, useEffect } from 'react';
+import AuthService from '../services/AuthService';
 
-const AuthContext = createContext({
-  token: null,
-  setToken: () => {},
+const AuthContext = createContext();
 
-  user: null,
-  setUser: () => {},
-});
-
-export function AuthProvider({ children }) {
-  const [token, setToken] = useState(() => localStorage.getItem('token'));
-  const [user, setUser] = useState(() => {
-    const storedUser = localStorage.getItem('user');
-    return storedUser ? JSON.parse(storedUser) : null;
-  });
+export const AuthProvider = ({ children }) => {
+  const [token, setToken] = useState(AuthService.getToken());
+  const [user, setUser] = useState(AuthService.getUser());
 
   useEffect(() => {
-    if (token) {
-      localStorage.setItem('token', token);
-    } else {
-      localStorage.removeItem('token');
-    }
-  }, [token]);
+    setToken(AuthService.getToken());
+    setUser(AuthService.getUser());
+  }, []);
 
-  useEffect(() => {
-    if (user) {
-      localStorage.setItem('user', JSON.stringify(user));
-    } else {
-      localStorage.removeItem('user');
-    }
-  }, [user]);
+  const login = async (email, password) => {
+    const { token, user } = await AuthService.login(email, password);
+    setToken(token);
+    setUser(user);
+  };
+
+  const logout = () => {
+    AuthService.logout();
+    setToken(null);
+    setUser(null);
+  };
 
   return (
-    <AuthContext.Provider value={{ token, setToken, user, setUser }}>
+    <AuthContext.Provider value={{ token, user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
-}
+};
 
-export function useAuthContext() {
+export const useAuthContext = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
     throw new Error('useAuthContext must be used within an AuthProvider');
   }
   return context;
-}
+};

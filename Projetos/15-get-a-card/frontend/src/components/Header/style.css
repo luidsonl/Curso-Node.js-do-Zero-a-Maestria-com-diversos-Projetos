@@ -5,7 +5,15 @@ header{
     display: flex;
     justify-content: center;
 }
-
-.header-inner{
+header .topbar{
     max-width: 1500px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+header nav .menu-item{
+    margin: 10px 20px;
+    cursor: pointer;
+    display: inline;
 }

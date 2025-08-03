@@ -16,7 +16,7 @@ export async function fetchClient(url, options = {}) {
   
   if (!res.ok) {
     const errorData = await res.json().catch(() => ({}));
-    throw new Error(errorData.message || 'Erro na requisição');
+    throw new Error( errorData.error || errorData.message || 'Erro na requisição');
   }
   
   return res.json();
