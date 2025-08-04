@@ -3,10 +3,11 @@ import { useAuthContext } from '../../contexts/AuthContext';
 import { useEffect, useState } from 'react';
 import fetchClient from '../../api/fetchClient';
 
+
 export default function ProtectedRoutes() {
   const [loading, setLoading] = useState(true);
   const [isValid, setIsValid] = useState(null);
-  const { token } = useAuthContext();
+  const { token, logout } = useAuthContext();
   
 
   useEffect(()=>{
@@ -21,13 +22,14 @@ export default function ProtectedRoutes() {
         setIsValid(true);
       }).catch(() => {
         setIsValid(false);
+        logout();
       }).finally(()=>{
         setLoading(false);
       });
     }
 
     check();
-  },[token])
+  },[token, logout])
 
   if (loading) return <p>Carregando...</p>;
 

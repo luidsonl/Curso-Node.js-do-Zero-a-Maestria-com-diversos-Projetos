@@ -1,9 +1,43 @@
+import { useEffect, useState } from "react";
+import { useAuthContext } from "../../contexts/AuthContext";
+import './style.css'
+
 
 
 function Profile(){
-    return(
-        <h1>Profile</h1>
-    )
+
+    const {user} = useAuthContext();
+    const [editMode, setEditMode] = useState(false);
+    const [error, setError] = useState('');
+
+    const handleSubmit = async (e) => {
+        
+    };
+
+    return editMode ? (
+        <section className="user-info">
+            <h1>Editing profile</h1>
+            <form onSubmit={handleSubmit}></form>
+
+            <button onClick={()=>{setEditMode(false)}}>back</button>
+        </section>
+    ) : (
+    
+        <section className="user-info">
+            <h1>{user.name}</h1>
+            <h2>email:</h2>
+            <p>{user.email}</p>
+
+            {user.phone && (
+                <>
+                    <h2>Phone:</h2>
+                    <p>{user.phone}</p>
+                </>
+            )}
+            <button onClick={()=>{setEditMode(true)}}>edit</button>
+        </section>
+    );
+    
 }
 
 
