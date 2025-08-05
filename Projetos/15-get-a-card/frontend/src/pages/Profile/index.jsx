@@ -10,9 +10,21 @@ function Profile(){
     const [editMode, setEditMode] = useState(false);
     const [error, setError] = useState('');
 
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        phone: ''
+    });
+
     const handleSubmit = async (e) => {
         
     };
+
+    if(!user){
+        return null;
+    }
 
     return editMode ? (
         <section className="user-info">

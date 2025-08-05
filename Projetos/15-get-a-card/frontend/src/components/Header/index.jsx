@@ -31,7 +31,7 @@ function Header(){
                     { !user && (
                         <>
                             <Link className='menu-item' to={ROUTES.LOGIN}>Login</Link>
-                            <Link className='menu-item' to={ROUTES.REGISTER}>Logon</Link>
+                            <Link className='menu-item' to={ROUTES.REGISTER}>Register</Link>
                         </>
                         
                     )}

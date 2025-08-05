@@ -11,10 +11,7 @@ class AuthService {
       method: 'GET',
     });
 
-    localStorage.setItem('token', data.token);
-    localStorage.setItem('user', JSON.stringify(user));
-
-    return { token: data.token, user };
+    return { token: data.token,user: user };
   }
 
 
@@ -28,24 +25,21 @@ class AuthService {
       method: 'GET',
     });
 
-    localStorage.setItem('token', data.token);
-    localStorage.setItem('user', JSON.stringify(user));
-
-    return { token: data.token, user };
+    return { token: data.token, user: user };
   }
 
-  static logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-  }
+  static async update(formData, token) {
 
-  static getToken() {
-    return localStorage.getItem('token');
-  }
+    const data = await fetchClient('users/update', {
+      method: 'PATCH',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        ...(formData instanceof FormData ? {} : { 'Content-Type': 'application/json' })
+      },
+      body: formData instanceof FormData ? formData : JSON.stringify(formData),
+    });
 
-  static getUser() {
-    const storedUser = localStorage.getItem('user');
-    return storedUser ? JSON.parse(storedUser) : null;
+    return data;
   }
 }
 
