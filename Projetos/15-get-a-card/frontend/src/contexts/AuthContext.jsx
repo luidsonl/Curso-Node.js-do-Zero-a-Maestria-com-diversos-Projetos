@@ -39,18 +39,32 @@ export const AuthProvider = ({ children }) => {
 
   const validateToken = async ()=>{
     await fetchClient('users/check', {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }).catch(() => {
-        setToken(null);
-        setUser(null);
-      })
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).catch(() => {
+      setToken(null);
+      setUser(null);
+    })
+  }
+
+  const refresh = async ()=>{
+    await fetchClient(`users/${user._id}`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then((res) => {
+      setUser(res);
+    }).catch(() => {
+      setToken(null);
+      setUser(null);
+    });
   }
 
   return (
-    <AuthContext.Provider value={{ token, user, login, register, logout }}>
+    <AuthContext.Provider value={{ token, user, login, register, logout, refresh }}>
       {children}
     </AuthContext.Provider>
   );

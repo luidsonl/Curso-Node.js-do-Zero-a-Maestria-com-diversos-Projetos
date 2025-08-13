@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { useAuthContext } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 import './style.css'
+import { ROUTES } from "../../routes/appRoutes";
 
 
 function Profile(){
 
     const {user} = useAuthContext();
-    
+    const navigate = useNavigate();
 
     if(!user){
         return null;
@@ -23,7 +25,7 @@ function Profile(){
                     <p>{user.phone}</p>
                 </>
             )}
-            <button>edit</button>
+            <button onClick={()=>navigate(ROUTES.EDIT_PROFILE)}>edit</button>
         </section>
     )
 }
