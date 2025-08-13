@@ -1,11 +1,18 @@
-import { createContext, useState, useContext } from 'react';
+import { createContext, useState, useContext, useEffect } from 'react';
 import AuthService from '../services/AuthService';
+import fetchClient from '../api/fetchClient';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem('token'));
   const [user, setUser] = useState(localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null);
+
+  useEffect(()=>{
+    if(token){
+      validateToken();
+    }
+  },[])
 
   const login = async (email, password) => {
     const { token, user } = await AuthService.login(email, password);
@@ -30,6 +37,17 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('user');
   };
 
+  const validateToken = async ()=>{
+    await fetchClient('users/check', {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }).catch(() => {
+        setToken(null);
+        setUser(null);
+      })
+  }
 
   return (
     <AuthContext.Provider value={{ token, user, login, register, logout }}>
