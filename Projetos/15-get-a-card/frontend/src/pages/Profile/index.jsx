@@ -3,6 +3,7 @@ import { useAuthContext } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import './style.css'
 import { ROUTES } from "../../routes/appRoutes";
+import MediaService from "../../services/MediaService";
 
 
 function Profile(){
@@ -10,12 +11,17 @@ function Profile(){
     const {user} = useAuthContext();
     const navigate = useNavigate();
 
+    console.log(user);
+
     if(!user){
         return null;
     }
     return(
         <section className="user-info">
             <h1>{user.name}</h1>
+            {user.profilePicture&&(
+                <img src={MediaService.getUrl(user.profilePicture.filePath)} alt="" />
+            )}
             <h2>email:</h2>
             <p>{user.email}</p>
 

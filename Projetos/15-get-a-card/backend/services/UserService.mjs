@@ -62,7 +62,7 @@ class UserService{
         return userObj;
     }
 
-    static async loginUser(data) {
+    static async loginUser(data, populateRefs = true) {
         const { email, password } = data;
         
         const requiredFields = { email, password };
@@ -75,7 +75,13 @@ class UserService{
             }
         }
         
-        const user = await User.findOne({ email });
+        let query = User.findOne({ email });
+
+        if (populateRefs) {
+            query = query.populate('profilePicture');
+        }
+
+        const user = await query.exec();
 
         if (!user) {
             const error = new Error('Email ou senha incorretos');
@@ -95,13 +101,20 @@ class UserService{
     }
 
 
-    static async getUserById(id){
-        const currentUser = await User.findById(id).select('-password');
+    static async getUserById(id, populateRefs = true){
+        let query = User.findById(id).select('-password');
+
+
+        if (populateRefs) {
+            query = query.populate('profilePicture');
+        }
+        
+        const currentUser = await query.exec();
 
         return currentUser;
     }
 
-    static async getUserByToken(token){
+    static async getUserByToken(token, populateRefs = true){
 
         if(!token){
             return null;
@@ -111,7 +124,13 @@ class UserService{
 
         const userId = decode.id;
 
-        const user = await User.findById(userId);
+        let query = User.findById(userId);
+
+        if (populateRefs) {
+            query = query.populate('profilePicture');
+        }
+        
+        const user = await query.exec();
         
         return user;
     }
