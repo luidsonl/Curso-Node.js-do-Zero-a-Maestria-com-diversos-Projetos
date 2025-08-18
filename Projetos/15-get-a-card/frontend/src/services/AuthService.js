@@ -29,17 +29,25 @@ class AuthService {
   }
 
   static async update(formData, token) {
-
-    const data = await fetchClient('users/update', {
-      method: 'PATCH',
+    console.log(formData);
+    const currentUser = await fetchClient('users/check', {
+      method: 'GET',
       headers: {
-        'Authorization': `Bearer ${token}`,
-        ...(formData instanceof FormData ? {} : { 'Content-Type': 'application/json' })
-      },
-      body: formData instanceof FormData ? formData : JSON.stringify(formData),
-    });
+        Authorization: `Bearer ${token}`
+      }
+    })
+    
+  }
 
-    return data;
+  static async check(token){
+    const user = await fetchClient('users/check', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+
+    return user;
   }
 }
 
