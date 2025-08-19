@@ -38,10 +38,12 @@ export const AuthProvider = ({ children }) => {
   };
 
   const validateToken = async ()=>{
-    await AuthService.check().catch(() => {
+    const user = await AuthService.check(token).catch(() => {
       setToken(null);
       setUser(null);
     })
+
+    setUser(user);
   }
 
 

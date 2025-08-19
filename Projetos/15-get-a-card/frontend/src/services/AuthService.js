@@ -28,13 +28,14 @@ class AuthService {
     return { token: data.token, user: user };
   }
 
-  static async update(formData, token) {
-    console.log(formData);
-    const currentUser = await fetchClient('users/check', {
-      method: 'GET',
+  static async update(data, token) {
+    console.log([...data.entries()]);
+    await fetchClient('users/update', {
+      method: 'PATCH',
       headers: {
         Authorization: `Bearer ${token}`
-      }
+      },
+      body: data
     })
     
   }

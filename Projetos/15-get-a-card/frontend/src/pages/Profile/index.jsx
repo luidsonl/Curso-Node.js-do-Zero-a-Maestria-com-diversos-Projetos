@@ -11,8 +11,6 @@ function Profile(){
     const {user} = useAuthContext();
     const navigate = useNavigate();
 
-    console.log(user);
-
     if(!user){
         return null;
     }

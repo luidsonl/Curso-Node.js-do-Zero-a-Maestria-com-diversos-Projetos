@@ -8,7 +8,7 @@ import { ROUTES } from "../../routes/appRoutes";
 
 function EditProfile(){
 
-    const {token, user} = useAuthContext();
+    const {token, user, validateToken} = useAuthContext();
     const navigate = useNavigate();
     const [error, setError] = useState('');
 
@@ -46,6 +46,7 @@ function EditProfile(){
             });
 
             await AuthService.update(data, token);
+            await validateToken();
             navigate(ROUTES.PROFILE);
         } catch (err) {
             setError(err.message);
@@ -117,7 +118,7 @@ function EditProfile(){
                 Foto de Perfil
                 <input 
                     type="file"
-                    name="profilePicture"
+                    name="image"
                     onChange={handleChange}
                 />
             </label>
