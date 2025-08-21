@@ -31,7 +31,8 @@ class CardController{
     static async getByPage(req, res){
         try {
             const page = req.query.page || 1;
-            const cards = await CardService.getCardsByPage(page)
+            const offset = req.query.offset || 10;
+            const cards = await CardService.getCardsByPage(page, offset)
 
             return res.status(200).json(cards);
         } catch (error) {
