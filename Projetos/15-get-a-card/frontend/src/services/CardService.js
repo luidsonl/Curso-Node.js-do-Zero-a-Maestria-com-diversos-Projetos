@@ -15,7 +15,7 @@ class CardService{
             headers: {
                 Authorization: `Bearer ${token}`
             },
-            body: JSON.stringify(formData),
+            body: formData,
         });
 
         return card;

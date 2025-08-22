@@ -23,6 +23,7 @@ function Header(){
                 <nav aria-label="User Navigation" className='user-navigation'>
                     { user && (
                         <>
+                            <span>alchemy: {user.alchemy}</span>
                             <Link className='menu-item' to={ROUTES.PROFILE}>{user.name.split(' ')[0]}</Link>
                             <span className='menu-item' onClick={logout}>Logout</span>
                         </>

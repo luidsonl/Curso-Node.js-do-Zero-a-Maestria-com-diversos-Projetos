@@ -69,7 +69,8 @@ function TransmuteModal() {
     formData.tags.forEach(tag => data.append("tags[]", tag));
 
     try {
-      await CardService.update(data, token);
+      console.log(data)
+      await CardService.create(data, token);
       navigate(-1); // volta após atualizar
     } catch (err) {
       setError({ submit: err.message });
@@ -141,7 +142,7 @@ function TransmuteModal() {
 
           <div className="form-buttons">
             <button type="button" onClick={() => navigate(-1)}>Cancelar</button>
-            <button type="submit">Atualizar</button>
+            <button type="submit">create</button>
           </div>
         </form>
       </div>
