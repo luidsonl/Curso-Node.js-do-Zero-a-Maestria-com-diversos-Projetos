@@ -3,16 +3,17 @@ import { useNavigate } from "react-router-dom";
 import './style.css';
 import CardService from "../../../services/CardService";
 import { useAuthContext } from "../../../contexts/AuthContext";
+import { ROUTES } from "../../../routes/appRoutes";
 
 function TransmuteModal() {
-  const { token, user } = useAuthContext();
+  const { token, user, validateToken } = useAuthContext();
   const navigate = useNavigate();
 
   const [error, setError] = useState({});
   const [formData, setFormData] = useState({
     name: '',
     description: '',
-    price: 10,
+    price: 1,
     tags: [''],
     featuredImage: null,
     gallery: []
@@ -66,12 +67,14 @@ function TransmuteModal() {
     data.append("price", formData.price);
     data.append("featuredImage", formData.featuredImage);
     formData.gallery.forEach(file => data.append("gallery", file));
-    formData.tags.forEach(tag => data.append("tags[]", tag));
+    formData.tags.forEach(tag => data.append("tags", tag));
 
     try {
-      console.log(data)
+      console.log(data);
       await CardService.create(data, token);
-      navigate(-1); // volta após atualizar
+
+      await validateToken();
+      navigate(ROUTES.DASHBOARD);
     } catch (err) {
       setError({ submit: err.message });
     }

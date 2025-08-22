@@ -19,13 +19,13 @@ function Home (){
     },[page])
 
     return(
-        <main>
+        <>
             <h1>Get a card</h1>
 
             <p>{page}</p>
 
             <TransmuteButton/>
-        </main>
+        </>
     )
 }
 

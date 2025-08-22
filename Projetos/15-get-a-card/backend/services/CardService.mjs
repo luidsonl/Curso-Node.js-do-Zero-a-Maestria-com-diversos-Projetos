@@ -62,8 +62,9 @@ class CardService{
             tags: tags
         })
 
-
         const newCard = await card.save();
+        user.alchemy = user.alchemy - 1;
+        user.save();
 
         return newCard;
     }
