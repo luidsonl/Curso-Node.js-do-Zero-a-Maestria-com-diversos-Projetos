@@ -5,7 +5,7 @@ import CardService from "../../../services/CardService";
 import { useAuthContext } from "../../../contexts/AuthContext";
 import { ROUTES } from "../../../routes/appRoutes";
 
-function TransmuteModal() {
+function TransmuteModal({modalToggle}) {
   const { token, user, validateToken } = useAuthContext();
   const navigate = useNavigate();
 
@@ -74,6 +74,7 @@ function TransmuteModal() {
       await CardService.create(data, token);
 
       await validateToken();
+      modalToggle();
       navigate(ROUTES.DASHBOARD);
     } catch (err) {
       setError({ submit: err.message });
@@ -83,7 +84,7 @@ function TransmuteModal() {
   return (
     <div className="modal">
       <div className="modal-content">
-        <span className="close-btn" onClick={() => navigate(-1)}>&times;</span>
+        <span className="close-btn" onClick={() => modalToggle()}>&times;</span>
         <h1>Registrar</h1>
         {error.submit && <p className="error">{error.submit}</p>}
 
@@ -148,6 +149,7 @@ function TransmuteModal() {
             <button type="submit">create</button>
           </div>
         </form>
+        <p>Transmuting a card will cost 1 alchemy point.</p>
       </div>
     </div>
   );
