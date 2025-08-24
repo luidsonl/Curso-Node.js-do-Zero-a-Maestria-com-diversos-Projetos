@@ -5,6 +5,8 @@ import TransmuteButton from "../../components/TransmuteButton";
 import CardFrame from "../../components/CardFrame";
 import MediaService from "../../services/MediaService";
 
+import './style.css'
+
 function Home (){
     const [searchParams, setSearchParams] = useSearchParams();
     const page = searchParams.get('page') || 1;
@@ -24,17 +26,19 @@ function Home (){
     return(
         <>
             <h1>Get a card</h1>
-
-            {cards.map((card)=>(
-                <>
-                <CardFrame 
-                    name={card.name}
-                    id={card.id}
-                    featuredImage={MediaService.getUrl(card.featuredImage.filePath)}
-                    owner={card.owner.name}
-                />
-                </>
-            ))}
+            <section className="cards-section">
+                {cards.map((card)=>(
+                    <>
+                    <CardFrame 
+                        name={card.name}
+                        id={card.id}
+                        featuredImage={MediaService.getUrl(card.featuredImage.filePath)}
+                        owner={card.owner.name}
+                    />
+                    </>
+                ))}
+            </section>
+            
 
             <TransmuteButton/>
         </>
