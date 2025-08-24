@@ -87,7 +87,7 @@ class CardService{
         let query = Card.find().skip(skip).limit(offset);
 
         if (populateRefs) {
-            query = query.populate('featuredImage').populate('gallery');
+            query = query.populate('featuredImage').populate('gallery').populate('owner');
         }
 
         const cards = await query.exec();

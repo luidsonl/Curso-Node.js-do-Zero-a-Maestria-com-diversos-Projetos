@@ -29,7 +29,6 @@ class AuthService {
   }
 
   static async update(data, token) {
-    console.log([...data.entries()]);
     await fetchClient('users/update', {
       method: 'PATCH',
       headers: {

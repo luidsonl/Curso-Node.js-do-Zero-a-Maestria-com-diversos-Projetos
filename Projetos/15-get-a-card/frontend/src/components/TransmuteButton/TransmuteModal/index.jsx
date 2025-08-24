@@ -13,7 +13,6 @@ function TransmuteModal({modalToggle}) {
   const [formData, setFormData] = useState({
     name: '',
     description: '',
-    price: 1,
     tags: [''],
     featuredImage: null,
     gallery: []
@@ -52,7 +51,6 @@ function TransmuteModal({modalToggle}) {
     const newErrors = {};
     if (!formData.name.trim()) newErrors.name = "Nome obrigatório";
     if (!formData.featuredImage) newErrors.featuredImage = "Imagem principal obrigatória";
-    if (!formData.price || formData.price <= 0) newErrors.price = "Preço deve ser maior que 0";
 
     if (Object.keys(newErrors).length > 0) {
       setError(newErrors);
@@ -64,13 +62,11 @@ function TransmuteModal({modalToggle}) {
     const data = new FormData();
     data.append("name", formData.name);
     data.append("description", formData.description);
-    data.append("price", formData.price);
     data.append("featuredImage", formData.featuredImage);
     formData.gallery.forEach(file => data.append("gallery", file));
     formData.tags.forEach(tag => data.append("tags", tag));
 
     try {
-      console.log(data);
       await CardService.create(data, token);
 
       await validateToken();
@@ -111,16 +107,6 @@ function TransmuteModal({modalToggle}) {
             />
           </label>
 
-          <label>
-            Preço
-            <input
-              type="number"
-              name="price"
-              value={formData.price}
-              onChange={handleChange}
-            />
-            {error.price && <span className="error">{error.price}</span>}
-          </label>
 
           <h3>Tags</h3>
           <div className="tags-container">
