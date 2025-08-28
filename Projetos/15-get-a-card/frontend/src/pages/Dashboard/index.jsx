@@ -15,7 +15,6 @@ function Dashboard() {
       async function fetchCards() {
           const cards = await CardService.getByUser(user._id);
           
-          console.log(cards);
           setCards(cards);
       }
 
@@ -30,7 +29,7 @@ function Dashboard() {
                   <>
                   <CardFrame 
                       name={card.name}
-                      id={card.id}
+                      id={card._id}
                       featuredImage={MediaService.getUrl(card.featuredImage.filePath)}
                       owner={card.owner.name}
                   />

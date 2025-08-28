@@ -15,8 +15,7 @@ function Home (){
     useEffect(()=>{
         async function fetchCards() {
             const cards = await CardService.getByPage(page);
-            
-            console.log(cards);
+        
             setCards(cards);
         }
 
@@ -31,7 +30,7 @@ function Home (){
                     <>
                     <CardFrame 
                         name={card.name}
-                        id={card.id}
+                        id={card._id}
                         featuredImage={MediaService.getUrl(card.featuredImage.filePath)}
                         owner={card.owner.name}
                     />

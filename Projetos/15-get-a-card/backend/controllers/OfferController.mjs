@@ -63,6 +63,31 @@ class OfferController{
         
     }
 
+    static async getByCardId(req, res){
+        try {
+            const cardId = req.params.cardId;
+            
+            if(!validateObjectId(cardId)){
+                return res.status(404).json({ message: 'Card não encontrado' });
+            }
+
+            const offer = await OfferService.getByCardId(cardId);
+
+            if(!offer){
+                return res.status(404).json({
+                    message: 'Offer não encontrada'
+                });
+            }
+
+            return res.status(200).json(offer);
+        } catch (error) {
+            return res.status(error.httpCode ?? 500).json({ 
+                message: 'Erro ao buscar oferta', 
+                error: error.message 
+            });
+        }
+    }
+
     static async create( req, res){
         try {
             const data = pick(req.body, ['cardId', 'price', 'due']);

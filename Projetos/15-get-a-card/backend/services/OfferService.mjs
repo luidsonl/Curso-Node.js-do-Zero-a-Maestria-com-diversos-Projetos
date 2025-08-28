@@ -70,6 +70,12 @@ class OfferService{
 
     }
 
+    static async getByCardId(cardId){
+        const offer = await Offer.findOne({ card: cardId});
+
+        return offer;
+    }
+
     static async cancel(orderId, token){
         const offer = await Offer.findById(orderId).populate('card');
         const user = await UserService.getUserByToken(token);
