@@ -19,7 +19,7 @@ function Dashboard() {
       }
 
       fetchCards();
-  },[])
+  },[user])
 
   return(
       <>

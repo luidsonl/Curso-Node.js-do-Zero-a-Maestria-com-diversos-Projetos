@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CardService from "../../services/CardService";
 import MediaService from "../../services/MediaService";
+import Tag from "../../components/Tag";
 
 function CardPage() {
   const { id } = useParams();
@@ -14,7 +15,7 @@ function CardPage() {
       try {
         const cardData = await CardService.getOne(id);
         setCard(cardData);
-        console.log(cardData);
+        console.log(cardData.tags);
       } catch (err) {
         console.error('Erro ao buscar card:', err);
       }
@@ -30,6 +31,13 @@ function CardPage() {
         <h1>{card.name}</h1>
         <img src={MediaService.getUrl(card.featuredImage.filePath)} alt="" />
         <p>{card.description}</p>
+        {card.tags && card.tags.map((tag, i) => (
+          <Tag key={i}>{tag}</Tag>
+        ))}
+
+        {card.gallery && card.gallery.map((image,i)=>(
+          <img key={i} src={MediaService.getUrl(image.filePath)}/>
+        ))}
     </section>
   );
 }
