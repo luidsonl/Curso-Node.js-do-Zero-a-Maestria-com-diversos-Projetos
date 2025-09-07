@@ -3,10 +3,13 @@ import { useParams } from "react-router-dom";
 import CardService from "../../services/CardService";
 import MediaService from "../../services/MediaService";
 import Tag from "../../components/Tag";
+import { useAuthContext } from "../../contexts/AuthContext";
+import CreateOfferButton from "../../components/CreateOfferButton";
 
 function CardPage() {
   const { id } = useParams();
   const [card, setCard] = useState(null);
+  const {user} = useAuthContext();
 
   useEffect(() => {
     if (!id) return;
@@ -24,6 +27,11 @@ function CardPage() {
     getCard();
   }, [id]);
 
+  useEffect(()=>{
+    console.log(user)
+    console.log(card)
+  },[card])
+
   if (!card) return <p>Carregando...</p>;
 
   return (
@@ -38,6 +46,12 @@ function CardPage() {
         {card.gallery && card.gallery.map((image,i)=>(
           <img key={i} src={MediaService.getUrl(image.filePath)}/>
         ))}
+
+        {(card && user)&&(
+          (card.alchemist == user._id && card.available) &&(
+            <CreateOfferButton/>
+          )
+        )}
     </section>
   );
 }
