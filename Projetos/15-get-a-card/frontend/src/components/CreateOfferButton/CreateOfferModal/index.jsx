@@ -5,7 +5,7 @@ import { useAuthContext } from "../../../contexts/AuthContext";
 import { ROUTES } from "../../../routes/appRoutes";
 import OfferService from "../../../services/OfferService";
 
-function CrerateOfferModal({modalToggle, card}) {
+function CrerateOfferModal({modalToggle, card, setRefresh}) {
   const { token, user, validateToken } = useAuthContext();
   const navigate = useNavigate();
 
@@ -72,14 +72,13 @@ function CrerateOfferModal({modalToggle, card}) {
     if(formData.due){
       data.append("due", formData.due);
     }
-    console.log(data);
 
     try {
       await OfferService.create(data, token);
 
       await validateToken();
       modalToggle();
-      navigate(ROUTES.DASHBOARD);
+      setRefresh();
     } catch (err) {
       setError({ submit: err.message });
     }

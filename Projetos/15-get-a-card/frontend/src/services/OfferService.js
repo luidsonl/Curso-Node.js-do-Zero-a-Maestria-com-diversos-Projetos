@@ -12,6 +12,24 @@ class OfferService{
 
         return data;
     }
+
+    static async cancel(id, token){
+        const offer = await fetchClient(`offers/card/${id}`, {
+            method: 'get',
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+        });
+
+        const data = await fetchClient(`offers/cancel/${offer._id}`, {
+            method: 'post',
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+        });
+
+
+    }
 }
 
 

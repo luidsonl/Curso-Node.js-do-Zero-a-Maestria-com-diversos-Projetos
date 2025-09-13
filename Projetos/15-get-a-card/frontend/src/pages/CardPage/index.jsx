@@ -5,11 +5,13 @@ import MediaService from "../../services/MediaService";
 import Tag from "../../components/Tag";
 import { useAuthContext } from "../../contexts/AuthContext";
 import CreateOfferButton from "../../components/CreateOfferButton";
+import CancelOfferButton from "../../components/CancelOfferButton";
 
 function CardPage() {
   const { id } = useParams();
   const [card, setCard] = useState(null);
   const {user} = useAuthContext();
+  const [refresh, setRefresh] = useState(0);
 
   useEffect(() => {
     if (!id) return;
@@ -25,7 +27,7 @@ function CardPage() {
     }
 
     getCard();
-  }, [id]);
+  }, [id, refresh]);
 
 
   if (!card) return <p>Carregando...</p>;
@@ -43,11 +45,17 @@ function CardPage() {
           <img key={i} src={MediaService.getUrl(image.filePath)}/>
         ))}
 
-        {(card && user)&&(
-          (card.alchemist == user._id && card.available) &&(
-            <CreateOfferButton card={card}/>
-          )
+        {card && user && (
+          <>
+            {card.alchemist === user._id && card.available && (
+              <CreateOfferButton card={card} setRefresh={setRefresh} />
+            )}
+            {card.alchemist === user._id && !card.available && (
+              <CancelOfferButton card={card} setRefresh={setRefresh} />
+            )}
+          </>
         )}
+
     </section>
   );
 }
