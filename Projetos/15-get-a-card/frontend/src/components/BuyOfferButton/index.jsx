@@ -4,7 +4,7 @@ import { useAuthContext } from '../../contexts/AuthContext';
 import OfferService from '../../services/OfferService';
 
 function BuyOfferButton({offer, setRefresh}){
-    const {user, token} = useAuthContext();
+    const {user, token, validateToken} = useAuthContext();
     console.log(user)
 
     if(!user){
@@ -17,6 +17,7 @@ function BuyOfferButton({offer, setRefresh}){
             if(setRefresh){
                 setRefresh();
             }
+            validateToken();
         }
         
     }
