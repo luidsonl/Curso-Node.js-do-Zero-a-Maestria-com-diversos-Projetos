@@ -13,6 +13,10 @@ function Dashboard() {
 
   useEffect(()=>{
       async function fetchCards() {
+            if(!user){
+                return;
+            }
+
           const cards = await CardService.getByUser(user._id);
           
           setCards(cards);

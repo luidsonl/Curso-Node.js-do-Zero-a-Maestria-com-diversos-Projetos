@@ -71,7 +71,13 @@ class OfferService{
     }
 
     static async getByCardId(cardId){
-        const offer = await Offer.findOne({ card: cardId});
+        const offer = await Offer.find({ card: cardId});
+
+        return offer;
+    }
+
+    static async getOpenByCardId(cardId){
+        const offer = await Offer.findOne({ card: cardId, 'status': 'open'});
 
         return offer;
     }

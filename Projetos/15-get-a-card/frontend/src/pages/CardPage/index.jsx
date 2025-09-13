@@ -6,12 +6,15 @@ import Tag from "../../components/Tag";
 import { useAuthContext } from "../../contexts/AuthContext";
 import CreateOfferButton from "../../components/CreateOfferButton";
 import CancelOfferButton from "../../components/CancelOfferButton";
+import OfferService from "../../services/OfferService";
+import BuyOfferButton from "../../components/BuyOfferButton";
 
 function CardPage() {
   const { id } = useParams();
   const [card, setCard] = useState(null);
   const {user} = useAuthContext();
   const [refresh, setRefresh] = useState(0);
+  const [offer, setOffer] = useState(null);
 
   useEffect(() => {
     if (!id) return;
@@ -20,14 +23,28 @@ function CardPage() {
       try {
         const cardData = await CardService.getOne(id);
         setCard(cardData);
-        console.log(cardData.tags);
+
       } catch (err) {
         console.error('Erro ao buscar card:', err);
       }
     }
-
     getCard();
   }, [id, refresh]);
+
+  useEffect(()=>{
+    try {
+      async function getOffer(){
+        const offer = await OfferService.getByCard(id)
+        setOffer(offer);
+        console.log(offer);
+      }
+
+      getOffer();
+
+    } catch (err) {
+      console.error('Erro ao buscar oferta:', err);
+    }
+  },[card, refresh])
 
 
   if (!card) return <p>Carregando...</p>;
@@ -52,6 +69,12 @@ function CardPage() {
             )}
             {card.alchemist === user._id && !card.available && (
               <CancelOfferButton card={card} setRefresh={setRefresh} />
+            )}
+            {card.alchemist === user._id && !card.available && (
+              <CancelOfferButton card={card} setRefresh={setRefresh} />
+            )}
+            { card.alchemist !== user._id && !card.available &&(
+              <BuyOfferButton offer={offer} setRefresh={setRefresh}/>
             )}
           </>
         )}
