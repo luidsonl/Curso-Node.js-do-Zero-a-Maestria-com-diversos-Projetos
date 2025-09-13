@@ -64,16 +64,16 @@ function CardPage() {
 
         {card && user && (
           <>
-            {card.alchemist === user._id && card.available && (
+            {card.owner === user._id && card.available && (
               <CreateOfferButton card={card} setRefresh={setRefresh} />
             )}
-            {card.alchemist === user._id && !card.available && (
+            {card.owner === user._id && !card.available && (
               <CancelOfferButton card={card} setRefresh={setRefresh} />
             )}
-            {card.alchemist === user._id && !card.available && (
+            {card.owner === user._id && !card.available && (
               <CancelOfferButton card={card} setRefresh={setRefresh} />
             )}
-            { card.alchemist !== user._id && !card.available &&(
+            { card.owner != user._id && !card.available &&(
               <BuyOfferButton offer={offer} setRefresh={setRefresh}/>
             )}
           </>

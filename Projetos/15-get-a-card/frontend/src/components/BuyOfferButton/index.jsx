@@ -5,6 +5,7 @@ import OfferService from '../../services/OfferService';
 
 function BuyOfferButton({offer, setRefresh}){
     const {user, token} = useAuthContext();
+    console.log(user)
 
     if(!user){
         return null;

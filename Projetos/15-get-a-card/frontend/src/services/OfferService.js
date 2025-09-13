@@ -20,7 +20,7 @@ class OfferService{
 
     static async getByCard(id){
         try {
-            const offer = await fetchClient(`open/offers/card/${id}`, {
+            const offer = await fetchClient(`offers/open/card/${id}`, {
                 method: 'get',
             });
 
