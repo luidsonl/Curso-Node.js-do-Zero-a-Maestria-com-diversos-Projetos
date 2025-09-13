@@ -4,7 +4,10 @@ class OfferService{
     static async create(formData, token){
         const data = await fetchClient('offers', {
             method: 'POST',
-            body: JSON.stringify(formData),
+            body: formData,
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
         });
 
         return data;

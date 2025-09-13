@@ -27,10 +27,6 @@ function CardPage() {
     getCard();
   }, [id]);
 
-  useEffect(()=>{
-    console.log(user)
-    console.log(card)
-  },[card])
 
   if (!card) return <p>Carregando...</p>;
 
@@ -49,7 +45,7 @@ function CardPage() {
 
         {(card && user)&&(
           (card.alchemist == user._id && card.available) &&(
-            <CreateOfferButton/>
+            <CreateOfferButton card={card}/>
           )
         )}
     </section>

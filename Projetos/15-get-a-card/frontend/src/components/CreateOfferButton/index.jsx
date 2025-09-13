@@ -3,7 +3,7 @@ import './style.css'
 import CrerateOfferModal from './CreateOfferModal';
 import { useAuthContext } from '../../contexts/AuthContext';
 
-function CreateOfferButton(){
+function CreateOfferButton({card}){
     const {user} = useAuthContext();
     const[showModal, setShowModal] = useState(false);
 
@@ -21,7 +21,7 @@ function CreateOfferButton(){
                 Create Offer
             </button>
             {showModal && (
-                <CrerateOfferModal modalToggle={modalToggle}/>
+                <CrerateOfferModal modalToggle={modalToggle} card={card}/>
             )}
         </>
         
